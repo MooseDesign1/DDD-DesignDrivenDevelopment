@@ -16,15 +16,13 @@ CLAUDE_MD="$PROJECT_PATH/CLAUDE.md"
 
 echo "Uninstalling DDD from: $PROJECT_PATH"
 
-# --- Step 1: Remove skill symlinks ---
+# --- Step 1: Remove copied skills ---
 if [ -d "$SKILLS_DIR" ]; then
   for target in "$SKILLS_DIR"/ds-* "$SKILLS_DIR"/build-frame "$SKILLS_DIR"/resolve-token "$SKILLS_DIR"/resolve-component "$SKILLS_DIR"/validate-component "$SKILLS_DIR"/write-memory; do
     [ -e "$target" ] || continue
     skill_name="$(basename "$target")"
-    if [ -L "$target" ]; then
-      rm "$target"
-      echo "  Removed symlink: $skill_name"
-    fi
+    rm -rf "$target"
+    echo "  Removed $skill_name"
   done
 fi
 

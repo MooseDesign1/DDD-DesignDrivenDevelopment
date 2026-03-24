@@ -29,23 +29,18 @@ Claude never invents tokens or components. If something isn't in the knowledge-b
 
 ## Installation
 
-### 1. Clone DDD
-
 ```bash
-git clone https://github.com/MooseDesign1/DDD-DesignDrivenDevelopment.git ~/ddd
-```
-
-### 2. Install into your project
-
-```bash
-cd ~/ddd
-./install.sh /path/to/your/project
+npx design-driven-development /path/to/your/project
 ```
 
 This does three things:
 - Creates `design-system/` in your project with knowledge-base and memory directories
-- Symlinks all `ds-*` skills into your project's `.claude/skills/`
+- Copies all `ds-*` skills into your project's `.claude/skills/`
 - Appends a Design System Agent section to your project's `CLAUDE.md`
+
+No clone required. The package is downloaded, installs into your project, and is discarded. Your project is fully self-contained.
+
+**To update to a newer version**, re-run the command — it will skip existing files. To force-replace skills, remove `.claude/skills/ds-*` first then re-run.
 
 ### 3. Connect Figma Console MCP
 
@@ -148,8 +143,7 @@ Every Claude Code session in your project:
 ## Uninstall
 
 ```bash
-cd ~/ddd
-./uninstall.sh /path/to/your/project
+npx design-driven-development uninstall /path/to/your/project
 ```
 
 This removes:
@@ -169,8 +163,8 @@ rm -rf /path/to/your/project/design-system
 DDD can be installed into multiple projects from the same clone. Each project gets its own independent `design-system/` directory and knowledge-base.
 
 ```bash
-./install.sh ~/projects/app-one
-./install.sh ~/projects/app-two
+npx design-driven-development ~/projects/app-one
+npx design-driven-development ~/projects/app-two
 ```
 
 ---

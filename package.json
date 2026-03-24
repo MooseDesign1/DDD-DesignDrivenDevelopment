@@ -1,0 +1,29 @@
+{
+  "name": "design-driven-development",
+  "version": "0.1.0",
+  "description": "A Claude Code plugin that connects your Figma UI kit to your codebase",
+  "bin": {
+    "ddd": "./bin/ddd.js"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "templates/",
+    "install.sh",
+    "uninstall.sh",
+    "VERSION",
+    "README.md"
+  ],
+  "keywords": [
+    "claude-code",
+    "figma",
+    "design-system",
+    "design-driven-development",
+    "claude"
+  ],
+  "author": "MooseDesign1",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

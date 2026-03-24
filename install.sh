@@ -4,6 +4,22 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 VERSION=$(cat "$SCRIPT_DIR/VERSION")
 
+# --- Banner ---
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+echo -e "${CYAN}${BOLD}"
+echo ' ██████╗ ██████╗ ██████╗ '
+echo ' ██╔══██╗██╔══██╗██╔══██╗'
+echo ' ██║  ██║██║  ██║██║  ██║'
+echo ' ██║  ██║██║  ██║██║  ██║'
+echo ' ██████╔╝██████╔╝██████╔╝'
+echo ' ╚═════╝ ╚═════╝ ╚═════╝ '
+echo -e "${RESET}${DIM}  Design-Driven Development  v${VERSION}${RESET}"
+echo ''
+
 # --- Validate args ---
 if [ $# -lt 1 ]; then
   echo "Usage: ./install.sh <project-path>"
@@ -30,18 +46,16 @@ else
   sed -i.bak "s/- agent_version: .*/- agent_version: $VERSION/" "$DS_DIR/config.md" && rm -f "$DS_DIR/config.md.bak"
 fi
 
-# --- Step 2: Symlink skills ---
+# --- Step 2: Copy skills ---
 mkdir -p "$SKILLS_DIR"
 for skill_dir in "$SCRIPT_DIR/skills"/ds-* "$SCRIPT_DIR/skills"/build-frame "$SCRIPT_DIR/skills"/resolve-token "$SCRIPT_DIR/skills"/resolve-component "$SCRIPT_DIR/skills"/validate-component "$SCRIPT_DIR/skills"/write-memory; do
   skill_name="$(basename "$skill_dir")"
   target="$SKILLS_DIR/$skill_name"
-  if [ -L "$target" ]; then
-    echo "  Symlink $skill_name already exists — skipping"
-  elif [ -e "$target" ]; then
-    echo "  WARNING: $skill_name exists but is not a symlink — skipping"
+  if [ -e "$target" ]; then
+    echo "  $skill_name already exists — skipping"
   else
-    ln -s "$skill_dir" "$target"
-    echo "  Linked $skill_name"
+    cp -r "$skill_dir" "$target"
+    echo "  Copied $skill_name"
   fi
 done
 
@@ -56,5 +70,5 @@ else
 fi
 
 echo ""
-echo "Done! Start a Claude Code session in $PROJECT_PATH."
+echo -e "${CYAN}${BOLD}Done!${RESET} Start a Claude Code session in $PROJECT_PATH."
 echo "The agent will auto-run /ds-init on first conversation."
