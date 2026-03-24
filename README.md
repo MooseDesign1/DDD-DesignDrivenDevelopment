@@ -1,17 +1,36 @@
-# DDD — Design-Driven Development
+<div align="center">
 
-A Claude Code plugin that connects your Figma UI kit to your codebase. It scans your design system, maintains a structured knowledge-base, and gives Claude precise, project-specific context to build, document, and audit components — without hallucinating tokens or inventing conventions.
+```
+ ████████╗  ████████╗  ████████╗
+ ██╔═════╗  ██╔═════╗  ██╔═════╗
+ ██║    ██  ██║    ██  ██║    ██
+ ██║    ██  ██║    ██  ██║    ██
+ ██╚═════╝  ██╚═════╝  ██╚═════╝
+ ████████╔╝ ████████╔╝ ████████╔╝
+ ╚════════╝ ╚════════╝ ╚════════╝
+  Design-Driven Development
+```
+
+**A Claude Code plugin that connects your Figma UI kit to your codebase.**
+
+Scans your design system, builds a structured knowledge-base, and gives Claude precise project-specific context to build, document, and audit components — without hallucinating tokens or inventing conventions.
+
+![Version](https://img.shields.io/badge/version-0.1.0-A259FF?style=flat-square)
+![Claude Code](https://img.shields.io/badge/Claude_Code-required-0ACF83?style=flat-square)
+![Figma](https://img.shields.io/badge/Figma_MCP-required-1ABCFE?style=flat-square)
+
+</div>
 
 ---
 
 ## How It Works
 
-DDD installs into any project that uses Claude Code. It:
+DDD installs into any project that uses Claude Code. Each session it:
 
-1. **Scans your Figma file** — discovers components, tokens, styles, and naming conventions
-2. **Writes a knowledge-base** — structured markdown files Claude reads instead of guessing
-3. **Injects design context into Claude** — via a `CLAUDE.md` section loaded every session
-4. **Provides slash commands** — purpose-built workflows for building, documenting, and auditing
+1. **Reads** `design-system/config.md` and `design-system/MEMORY.md` to orient itself
+2. **Checks** if the knowledge-base is populated — if not, auto-runs `/ds-init`
+3. **Loads** only the files needed for the active command, on demand
+4. **Enforces** token and convention boundaries — never guesses, always asks
 
 Claude never invents tokens or components. If something isn't in the knowledge-base, it stops and asks.
 
@@ -33,63 +52,128 @@ Claude never invents tokens or components. If something isn't in the knowledge-b
 npx design-driven-development /path/to/your/project
 ```
 
-This does three things:
-- Creates `design-system/` in your project with knowledge-base and memory directories
-- Copies all `ds-*` skills into your project's `.claude/skills/`
-- Appends a Design System Agent section to your project's `CLAUDE.md`
+No clone required. The package downloads, installs into your project, and is discarded. Your project is fully self-contained — all skills and templates are copied in.
 
-No clone required. The package is downloaded, installs into your project, and is discarded. Your project is fully self-contained.
+What gets installed:
+- `design-system/` — knowledge-base, memory, and config directories
+- `.claude/skills/ds-*` — all design system commands
+- `CLAUDE.md` — design agent context injected into every Claude session
 
-**To update to a newer version**, re-run the command — it will skip existing files. To force-replace skills, remove `.claude/skills/ds-*` first then re-run.
+**To update**, remove the old skills and re-run:
+```bash
+rm -rf /path/to/your/project/.claude/skills/ds-*
+npx design-driven-development /path/to/your/project
+```
 
-### 3. Connect Figma Console MCP
+---
 
-In Claude Code, ensure the Figma Console MCP server is connected. DDD uses it to read your Figma file — without it, all design commands will stop and ask you to reconnect.
+## First Run
 
-### 4. Start a Claude Code session in your project
+On first launch, Claude detects the empty knowledge-base and automatically starts `/ds-init`.
 
 ```bash
 cd /path/to/your/project
 claude
 ```
 
-On first launch, Claude detects the empty knowledge-base and **automatically runs `/ds-init`** to scan your Figma file.
+<div align="center">
 
----
+```
+   ▄███████████▄  ✦
+  █  ◕       ◕  █
+  █      ‿      █
+   ▀███████████▀
+  ╱   ▄█████▄   ╲
 
-## First-Time Setup (`/ds-init`)
+  I now have all your design system sauce  ✦
+```
 
-`/ds-init` is the bootstrap scan. Claude will ask you:
+*Your DS assistant after a successful `/ds-init`*
 
-1. **Figma file URL** — paste any URL from your file (e.g. `https://figma.com/design/abc123/...`)
+</div>
+
+`/ds-init` will ask you three things:
+
+1. **Figma file URL** — paste any URL from your file
 2. **UI kit base** — shadcn, Radix, Material, custom, or other
-3. **Ticket tracker** — Jira, Linear, or none (for `/ds-handoff`)
+3. **Ticket tracker** — Jira, Linear, or none
 
-It then scans:
-- All variable collections → `design-system/knowledge-base/tokens.md`
-- All components and variants → `design-system/knowledge-base/components.md`
-- Text, color, and effect styles → `design-system/knowledge-base/styles.md`
-- Naming and structure patterns → `design-system/knowledge-base/conventions.md`
+Then it scans your entire Figma file and writes:
 
-When complete, it shows a summary of what was discovered and flags any low-confidence conventions for your review.
+| File | Contents |
+|---|---|
+| `knowledge-base/tokens.md` | All variable collections, grouped by category and mode |
+| `knowledge-base/components.md` | All components with variants, properties, children |
+| `knowledge-base/styles.md` | Text, color, and effect styles |
+| `knowledge-base/conventions.md` | Inferred naming and structure patterns |
+| `memory/REGISTRY.md` | Component registry with build status |
 
 ---
 
 ## Commands
 
+### Scanning
+
 | Command | What It Does |
 |---|---|
 | `/ds-init` | Bootstrap scan — scans Figma and populates the knowledge-base |
 | `/ds-update` | Re-scan Figma and show what changed since last scan |
-| `/ds-plan` | Plan a new component: interview → generate a build spec |
+| `/ds-audit` | Check all components against discovered conventions |
+
+### Building
+
+| Command | What It Does |
+|---|---|
+| `/ds-plan` | Interview → generate a build spec for a new component |
 | `/ds-build` | Build a component in Figma using the knowledge-base |
 | `/ds-add-variant` | Add a variant or state to an existing component |
-| `/ds-doc` | Generate component documentation from the knowledge-base |
-| `/ds-spec` | Generate an engineering implementation spec for handoff |
-| `/ds-handoff` | Create tickets in your tracker (Jira or Linear) |
-| `/ds-token` | Find the right token for a design intent |
-| `/ds-audit` | Check all components against discovered conventions |
 | `/ds-verify` | Screenshot-verify a built component against its spec |
+
+<div align="center">
+
+```
+✦  ╲  ▄███████████▄  ╱  ✦
+    █  ★       ★  █
+    █      ◡      █
+     ▀███████████▀
+        ▄█████▄
+
+  Yay! another component built  ✦
+```
+
+*Your DS assistant after `/ds-build` completes*
+
+</div>
+
+### Documentation & Handoff
+
+| Command | What It Does |
+|---|---|
+| `/ds-doc` | Generate component documentation from the knowledge-base |
+| `/ds-spec` | Generate an engineering implementation spec |
+| `/ds-handoff` | Create tickets in your tracker (Jira or Linear) |
+
+<div align="center">
+
+```
+   ▄███████████▄
+  █  ◠       ◠  █── ノ
+  █      ▿      █
+   ▀███████████▀
+      ▄█████▄   ──›
+
+  Packaged up and shipped!  ✦
+```
+
+*Your DS assistant after `/ds-handoff` completes*
+
+</div>
+
+### Utilities
+
+| Command | What It Does |
+|---|---|
+| `/ds-token` | Find the right token for a design intent |
 | `/ds-feedback` | Capture workflow preferences and save to memory |
 | `/ds-memory` | View and manage persistent memory files |
 | `/ds-help` | Show current system status and all available commands |
@@ -98,20 +182,18 @@ When complete, it shows a summary of what was discovered and flags any low-confi
 
 ## Project Structure
 
-After install, your project will contain:
-
 ```
 your-project/
 ├── design-system/
 │   ├── config.md              # Figma file key, UI kit, tracker settings
 │   ├── MEMORY.md              # Dashboard: counts, recent activity
 │   ├── framework.md           # System overview (auto-generated by /ds-init)
-│   ├── knowledge-base/
-│   │   ├── components.md      # All scanned components with variants/properties
-│   │   ├── tokens.md          # All design tokens, grouped by collection
-│   │   ├── styles.md          # Text, color, and effect styles
-│   │   └── conventions.md     # Inferred naming and structure patterns
-│   └── memory/
+│   ├── knowledge-base/        # Read-only — written by /ds-init and /ds-update
+│   │   ├── components.md
+│   │   ├── tokens.md
+│   │   ├── styles.md
+│   │   └── conventions.md
+│   └── memory/                # Claude-managed — updated throughout sessions
 │       ├── REGISTRY.md        # Per-component build status
 │       ├── TOKEN-GAPS.md      # Tokens Claude needed but didn't find
 │       ├── DECISIONS-ARCHIVE.md
@@ -119,24 +201,22 @@ your-project/
 │       ├── AUDIT-LOG.md
 │       └── specs/             # Saved build specs per component
 └── .claude/
-    └── skills/                # Symlinks to all ds-* skills
+    └── skills/                # Copied ds-* skill files
 ```
 
-The `knowledge-base/` is **read-only** during normal operation — only `/ds-init` and `/ds-update` write to it. The `memory/` directory is Claude-managed and updated throughout sessions.
+> `knowledge-base/` is **read-only** during normal operation. Only `/ds-init` and `/ds-update` write to it. The `memory/` directory is Claude-managed and updated freely.
 
 ---
 
-## How Claude Uses the Knowledge-Base
+## Agent Rules
 
-Every Claude Code session in your project:
+These rules are injected into every Claude session via `CLAUDE.md`:
 
-1. Reads `design-system/MEMORY.md` and `design-system/config.md`
-2. Checks if the knowledge-base is populated — if not, auto-runs `/ds-init`
-3. Loads only the specific knowledge-base files needed for the active command (not all at once)
+**Token boundary** — Claude only uses tokens present in `tokens.md`. If no suitable token exists, it logs the gap to `TOKEN-GAPS.md` and waits for confirmation before proceeding.
 
-**Token boundary rule:** Claude only uses tokens present in `tokens.md`. If no suitable token exists, it logs the gap to `TOKEN-GAPS.md` and asks you before proceeding.
+**Ambiguity** — If anything is unclear (which token, which component, how to interpret a design intent) Claude outputs a numbered question list before taking any Figma action.
 
-**Ambiguity rule:** If anything is unclear — which token to use, which component to instantiate, how to interpret a design intent — Claude outputs a numbered question list and waits for your answers before taking any Figma action.
+**Hard stops** — Claude will not apply an unconfirmed token, will not contradict a convention without approval, and will not modify an existing component unless explicitly asked.
 
 ---
 
@@ -146,11 +226,7 @@ Every Claude Code session in your project:
 npx design-driven-development uninstall /path/to/your/project
 ```
 
-This removes:
-- All skill symlinks from `.claude/skills/`
-- The DDD section from `CLAUDE.md`
-
-The `design-system/` directory is **not removed** (it contains your project data). Delete it manually if you no longer need it:
+Removes all skill files from `.claude/skills/` and the DDD section from `CLAUDE.md`. The `design-system/` directory is preserved — delete it manually if you no longer need it:
 
 ```bash
 rm -rf /path/to/your/project/design-system
@@ -160,7 +236,7 @@ rm -rf /path/to/your/project/design-system
 
 ## Multiple Projects
 
-DDD can be installed into multiple projects from the same clone. Each project gets its own independent `design-system/` directory and knowledge-base.
+Each project gets its own independent knowledge-base and memory. Install into as many as you need:
 
 ```bash
 npx design-driven-development ~/projects/app-one
@@ -169,8 +245,16 @@ npx design-driven-development ~/projects/app-two
 
 ---
 
-## Version
+<div align="center">
 
-Current version: `0.1.0` — see `VERSION` file.
+```
+   ▄███████████▄
+  █  ◉       ◉  █────✦
+  █      ▿      █
+   ▀███████████▀
+      ▄█████▄
+```
 
-Each installed project records its agent version in `design-system/config.md`. When you update DDD and re-run `install.sh`, existing `design-system/` directories are preserved — only the skill symlinks and `CLAUDE.md` section are updated.
+*v0.1.0 — Built for [Claude Code](https://claude.com/claude-code)*
+
+</div>
