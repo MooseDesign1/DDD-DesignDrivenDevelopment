@@ -13,12 +13,13 @@ print_ddd_banner() {
   local R='\033[0m'
 
   echo ""
-  echo -e "${C1} ██████╗ ${C2}██████╗ ${C3}██████╗ ${R}"
-  echo -e "${C1} ██╔══██╗${C2}██╔══██╗${C3}██╔══██╗${R}"
-  echo -e "${C1} ██║  ██║${C2}██║  ██║${C3}██║  ██║${R}"
-  echo -e "${C1} ██║  ██║${C2}██║  ██║${C3}██║  ██║${R}"
-  echo -e "${C1} ██████╔╝${C2}██████╔╝${C3}██████╔╝${R}"
-  echo -e "${C1} ╚═════╝ ${C2}╚═════╝ ${C3}╚═════╝ ${R}"
+  echo -e "${C1} ████████╗  ${C2}████████╗  ${C3}████████╗ ${R}"
+  echo -e "${C1} ██╔═════╗  ${C2}██╔═════╗  ${C3}██╔═════╗ ${R}"
+  echo -e "${C1} ██║    ██  ${C2}██║    ██  ${C3}██║    ██ ${R}"
+  echo -e "${C1} ██║    ██  ${C2}██║    ██  ${C3}██║    ██ ${R}"
+  echo -e "${C1} ██╚═════╝  ${C2}██╚═════╝  ${C3}██╚═════╝ ${R}"
+  echo -e "${C1} ████████╔╝ ${C2}████████╔╝ ${C3}████████╔╝${R}"
+  echo -e "${C1} ╚════════╝ ${C2}╚════════╝ ${C3}╚════════╝${R}"
 
   if [ -n "$version" ]; then
     echo -e "${DIM}  Design-Driven Development  v${version}${R}"
@@ -28,68 +29,87 @@ print_ddd_banner() {
   echo ""
 }
 
-# ─── Mascot ─────────────────────────────────────────────────────────────────
-# Working: focused, wand raised. Done: celebrating, sparkles.
+# ─── Mascot helpers ─────────────────────────────────────────────────────────
 
-print_mascot_working() {
+_mascot_colors() {
+  P='\033[38;2;162;89;255m'     # #A259FF — purple body
+  PB='\033[48;2;162;89;255m'    # #A259FF — purple fill
+  W='\033[38;2;255;255;255m'    # white   — face + accents
+  WD='\033[38;2;200;160;255m'   # soft lavender — wand stick
+  DIM='\033[2m'
+  R='\033[0m'
+}
+
+_print_tagline() {
   local tagline="${1:-}"
+  [ -n "$tagline" ] && echo -e "  ${DIM}${tagline}${R}"
+  echo ""
+}
 
-  local P='\033[38;2;162;89;255m'     # #A259FF — purple body
-  local PB='\033[48;2;162;89;255m'    # #A259FF — purple fill (background)
-  local W='\033[38;2;255;255;255m'    # white   — face features
-  local WD='\033[38;2;200;160;255m'   # soft purple — wand stick
-  local DIM='\033[2m'
-  local R='\033[0m'
+# ─── Mascot variants ─────────────────────────────────────────────────────────
 
+# Working — focused, wand extended right
+print_mascot_working() {
+  _mascot_colors
+  echo ""
   echo -e "   ${P}▄███████████▄${R}"
   echo -e "  ${P}█${PB}${W}  ·       ·  ${R}${P}█${R}"
   echo -e "  ${P}█${PB}${W}  ◉       ◉  ${R}${P}█${R}${WD}────${W}✦${R}"
   echo -e "  ${P}█${PB}${W}      ▿      ${R}${P}█${R}"
   echo -e "   ${P}▀███████████▀${R}"
   echo -e "      ${P}▄█████▄${R}"
-  echo -e "     ${P}█       █${R}"
-
-  if [ -n "$tagline" ]; then
-    echo ""
-    echo -e "  ${DIM}${tagline}${R}"
-  fi
-  echo ""
+  _print_tagline "$1"
 }
 
-print_mascot_done() {
-  local tagline="${1:-}"
-
-  local P='\033[38;2;162;89;255m'     # #A259FF — purple body
-  local PB='\033[48;2;162;89;255m'    # #A259FF — purple fill (background)
-  local W='\033[38;2;255;255;255m'    # white   — face features + sparkles
-  local DIM='\033[2m'
-  local R='\033[0m'
-
-  echo -e "${W}✦${R}   ${P}▄███████████▄${R}   ${W}✦${R}"
-  echo -e "   ${P}█${PB}${W}  ─       ─  ${R}${P}█${R}"
-  echo -e "   ${P}█${PB}${W}  ◠       ◠  ${R}${P}█${R}"
-  echo -e "   ${P}█${PB}${W}      ◡      ${R}${P}█${R}"
-  echo -e "    ${P}▀███████████▀${R}"
-  echo -e "       ${P}▄█████▄${R}"
-  echo -e "      ${P}█       █${R}"
-
-  if [ -n "$tagline" ]; then
-    echo ""
-    echo -e "  ${DIM}${tagline}${R}"
-  fi
+# Init — curious, arms spread wide
+print_mascot_init() {
+  _mascot_colors
   echo ""
+  echo -e "      ${W}✦${R}"
+  echo -e "   ${P}▄███████████▄${R}"
+  echo -e "  ${P}█${PB}${W}  ◕       ◕  ${R}${P}█${R}"
+  echo -e "  ${P}█${PB}${W}      ‿      ${R}${P}█${R}"
+  echo -e "   ${P}▀███████████▀${R}"
+  echo -e "  ${P}╱${R}   ${P}▄█████▄${R}   ${P}╲${R}"
+  _print_tagline "$1"
 }
 
-# ─── Convenience: named flow variants ───────────────────────────────────────
+# Build — triumphant, arms raised
+print_mascot_build() {
+  _mascot_colors
+  echo ""
+  echo -e "${W}✦${R}  ${P}╲${R}  ${P}▄███████████▄${R}  ${P}╱${R}  ${W}✦${R}"
+  echo -e "    ${P}█${PB}${W}  ─       ─  ${R}${P}█${R}"
+  echo -e "    ${P}█${PB}${W}  ★       ★  ${R}${P}█${R}"
+  echo -e "    ${P}█${PB}${W}      ◡      ${R}${P}█${R}"
+  echo -e "     ${P}▀███████████▀${R}"
+  echo -e "        ${P}▄█████▄${R}"
+  _print_tagline "$1"
+}
+
+# Handoff — waving arm, sending off
+print_mascot_handoff() {
+  _mascot_colors
+  echo ""
+  echo -e "   ${P}▄███████████▄${R}"
+  echo -e "  ${P}█${PB}${W}  ─       ─  ${R}${P}█${R}"
+  echo -e "  ${P}█${PB}${W}  ◠       ◠  ${R}${P}█${R}${WD}── ${W}ノ${R}"
+  echo -e "  ${P}█${PB}${W}      ▿      ${R}${P}█${R}"
+  echo -e "   ${P}▀███████████▀${R}"
+  echo -e "      ${P}▄█████▄${R}   ${WD}──›${R}"
+  _print_tagline "$1"
+}
+
+# ─── Named flow variants ─────────────────────────────────────────────────────
 
 print_ddd_init_complete() {
-  print_mascot_done "I now have all your design system sauce  ✦"
+  print_mascot_init "I now have all your design system sauce  ✦"
 }
 
 print_ddd_build_complete() {
-  print_mascot_done "Yay! another component built  ✦"
+  print_mascot_build "Yay! another component built  ✦"
 }
 
 print_ddd_handoff_complete() {
-  print_mascot_done "Packaged up and shipped!  ✦"
+  print_mascot_handoff "Packaged up and shipped!  ✦"
 }
