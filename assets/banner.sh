@@ -35,25 +35,26 @@ _mascot_colors() {
   P='\033[38;2;162;89;255m'     # #A259FF — purple body
   PB='\033[48;2;162;89;255m'    # #A259FF — purple fill
   W='\033[38;2;255;255;255m'    # white   — face + accents
-  WD='\033[38;2;200;160;255m'   # soft lavender — wand stick
+  WD='\033[38;2;200;160;255m'   # soft lavender — wand / arrow
   DIM='\033[2m'
   R='\033[0m'
 }
 
 _print_tagline() {
   local tagline="${1:-}"
+  echo ""
   [ -n "$tagline" ] && echo -e "  ${DIM}${tagline}${R}"
   echo ""
 }
 
-# ─── Mascot variants ─────────────────────────────────────────────────────────
+# ─── Mascot variants (5 lines each) ─────────────────────────────────────────
 
-# Working — focused, wand extended right
+# Working — focused eyes, wand extended right
 print_mascot_working() {
   _mascot_colors
   echo ""
+  echo ""
   echo -e "   ${P}▄███████████▄${R}"
-  echo -e "  ${P}█${PB}${W}  ·       ·  ${R}${P}█${R}"
   echo -e "  ${P}█${PB}${W}  ◉       ◉  ${R}${P}█${R}${WD}────${W}✦${R}"
   echo -e "  ${P}█${PB}${W}      ▿      ${R}${P}█${R}"
   echo -e "   ${P}▀███████████▀${R}"
@@ -61,12 +62,12 @@ print_mascot_working() {
   _print_tagline "$1"
 }
 
-# Init — curious, arms spread wide
+# Init — wide curious eyes, arms spread, ✦ floating top-right
 print_mascot_init() {
   _mascot_colors
   echo ""
-  echo -e "      ${W}✦${R}"
-  echo -e "   ${P}▄███████████▄${R}"
+  echo ""
+  echo -e "   ${P}▄███████████▄${R}  ${W}✦${R}"
   echo -e "  ${P}█${PB}${W}  ◕       ◕  ${R}${P}█${R}"
   echo -e "  ${P}█${PB}${W}      ‿      ${R}${P}█${R}"
   echo -e "   ${P}▀███████████▀${R}"
@@ -74,12 +75,12 @@ print_mascot_init() {
   _print_tagline "$1"
 }
 
-# Build — triumphant, arms raised
+# Build — star eyes, big smile, arms raised with sparkles
 print_mascot_build() {
   _mascot_colors
   echo ""
+  echo ""
   echo -e "${W}✦${R}  ${P}╲${R}  ${P}▄███████████▄${R}  ${P}╱${R}  ${W}✦${R}"
-  echo -e "    ${P}█${PB}${W}  ─       ─  ${R}${P}█${R}"
   echo -e "    ${P}█${PB}${W}  ★       ★  ${R}${P}█${R}"
   echo -e "    ${P}█${PB}${W}      ◡      ${R}${P}█${R}"
   echo -e "     ${P}▀███████████▀${R}"
@@ -87,12 +88,12 @@ print_mascot_build() {
   _print_tagline "$1"
 }
 
-# Handoff — waving arm, sending off
+# Handoff — relaxed eyes, waving arm, trailing arrow
 print_mascot_handoff() {
   _mascot_colors
   echo ""
+  echo ""
   echo -e "   ${P}▄███████████▄${R}"
-  echo -e "  ${P}█${PB}${W}  ─       ─  ${R}${P}█${R}"
   echo -e "  ${P}█${PB}${W}  ◠       ◠  ${R}${P}█${R}${WD}── ${W}ノ${R}"
   echo -e "  ${P}█${PB}${W}      ▿      ${R}${P}█${R}"
   echo -e "   ${P}▀███████████▀${R}"
