@@ -6,6 +6,7 @@
     "ddd": "./bin/ddd.js"
   },
   "files": [
+    "assets/",
     "bin/",
     "skills/",
     "templates/",

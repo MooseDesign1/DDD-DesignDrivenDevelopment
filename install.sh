@@ -5,20 +5,9 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 VERSION=$(cat "$SCRIPT_DIR/VERSION")
 
 # --- Banner ---
-CYAN='\033[0;36m'
-BOLD='\033[1m'
-DIM='\033[2m'
-RESET='\033[0m'
-
-echo -e "${CYAN}${BOLD}"
-echo ' ██████╗ ██████╗ ██████╗ '
-echo ' ██╔══██╗██╔══██╗██╔══██╗'
-echo ' ██║  ██║██║  ██║██║  ██║'
-echo ' ██║  ██║██║  ██║██║  ██║'
-echo ' ██████╔╝██████╔╝██████╔╝'
-echo ' ╚═════╝ ╚═════╝ ╚═════╝ '
-echo -e "${RESET}${DIM}  Design-Driven Development  v${VERSION}${RESET}"
-echo ''
+# shellcheck source=assets/banner.sh
+source "$SCRIPT_DIR/assets/banner.sh"
+print_ddd_banner "$VERSION"
 
 # --- Validate args ---
 if [ $# -lt 1 ]; then
@@ -70,5 +59,5 @@ else
 fi
 
 echo ""
-echo -e "${CYAN}${BOLD}Done!${RESET} Start a Claude Code session in $PROJECT_PATH."
+echo "Done! Start a Claude Code session in $PROJECT_PATH."
 echo "The agent will auto-run /ds-init on first conversation."
