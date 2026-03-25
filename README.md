@@ -49,7 +49,8 @@ Claude never invents tokens or components. If something isn't in the knowledge-b
 ## Installation
 
 ```bash
-npx design-driven-development /path/to/your/project
+cd /your project 
+npx design-driven-development 
 ```
 
 No clone required. The package downloads, installs into your project, and is discarded. Your project is fully self-contained — all skills and templates are copied in.
