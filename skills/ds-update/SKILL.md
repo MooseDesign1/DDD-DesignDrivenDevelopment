@@ -13,6 +13,8 @@ Re-scan the Figma file and show what changed since the last scan.
 ## Procedure
 
 ### Step 1 — Load current state
+Read `design-system/memory/feedback_*.md` if any exist and apply entries tagged `all` or `ds-update`.
+
 Read:
 - `design-system/config.md` — get Figma file key and agent version
 - `design-system/knowledge-base/tokens.md` — current token state
@@ -31,6 +33,20 @@ Run the same scans as ds-init:
 - `figma_get_variables` → new token state
 - `figma_search_components` + `figma_get_component_details` → new component state
 - `figma_get_styles` → new style state
+
+  If `figma_get_styles` returns zero styles (sync API throws on dynamic-page documents), fall back to `figma_execute`:
+  ```javascript
+  const [textStyles, paintStyles, effectStyles] = await Promise.all([
+    figma.getLocalTextStylesAsync(),
+    figma.getLocalPaintStylesAsync(),
+    figma.getLocalEffectStylesAsync(),
+  ]);
+  return JSON.stringify({
+    text: textStyles.map(s => ({ id: s.id, name: s.name, fontSize: s.fontSize, fontFamily: s.fontName?.family, fontWeight: s.fontName?.style })),
+    paint: paintStyles.map(s => ({ id: s.id, name: s.name })),
+    effect: effectStyles.map(s => ({ id: s.id, name: s.name, effects: s.effects })),
+  });
+  ```
 
 ### Step 4 — Compute semantic diff
 Compare old vs. new state for each knowledge-base file:
