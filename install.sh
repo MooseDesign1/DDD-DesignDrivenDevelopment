@@ -33,8 +33,12 @@ else
   cp -r "$SCRIPT_DIR/templates" "$DS_DIR"
   # Remove the CLAUDE.md injection template (it's only used for appending, not scaffolding)
   rm -f "$DS_DIR/claude-md-section.md"
-  # Stamp version into config
+fi
+
+# Always stamp agent_version (runs on fresh install and updates)
+if [ -f "$DS_DIR/config.md" ]; then
   sed -i.bak "s/- agent_version: .*/- agent_version: $VERSION/" "$DS_DIR/config.md" && rm -f "$DS_DIR/config.md.bak"
+  echo "  Updated agent_version to $VERSION in config.md"
 fi
 
 # --- Step 2: Copy skills (always overwrite to pick up updates) ---
