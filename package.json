@@ -1,13 +1,14 @@
 {
   "name": "design-driven-development",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Claude Code plugin that connects your Figma UI kit to your codebase",
   "bin": {
-    "ddd": "./bin/ddd.js"
+    "ddd": "bin/ddd.js"
   },
   "files": [
     "assets/",
     "bin/",
+    "hooks/",
     "skills/",
     "templates/",
     "install.sh",
