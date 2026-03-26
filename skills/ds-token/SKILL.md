@@ -13,15 +13,20 @@ Find the right token for a design intent.
 
 ## Procedure
 
-### Step 1 — Understand the need
+### Step 1 — Load context
+Read `design-system/memory/active_session.md` if it exists — apply any token gaps already confirmed in the current session to avoid re-asking.
+Read `design-system/knowledge-base/theming-conventions.md` if it exists — apply alias chain rules.
+Read `design-system/memory/feedback_*.md` if any exist and apply entries tagged `all` or `ds-token`.
+
+### Step 2 — Understand the need
 If the user hasn't specified clearly, ask:
 - What is the design intent? (e.g., "background for a card", "spacing between form fields")
 - What context? (e.g., which component, which state)
 
-### Step 2 — Invoke resolve-token
+### Step 3 — Invoke resolve-token
 Call the resolve-token internal skill with the design intent.
 
-### Step 3 — Present result
+### Step 4 — Present result
 
 **If high confidence match:**
 > Token: `<token-name>` — <value>
@@ -41,7 +46,7 @@ Call the resolve-token internal skill with the design intent.
 >
 > Once you add this token to the system, run `/ds-update` to refresh.
 
-### Step 4 — Write back
+### Step 5 — Write back
 Invoke write-memory if any gaps were logged.
 
 ## Rules
