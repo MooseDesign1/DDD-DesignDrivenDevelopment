@@ -35,6 +35,13 @@ else
   rm -f "$DS_DIR/claude-md-section.md"
 fi
 
+# Scaffold projects/ directory (safe to run on updates — never overwrites existing projects)
+if [ ! -d "$DS_DIR/projects" ]; then
+  mkdir -p "$DS_DIR/projects"
+  cp "$SCRIPT_DIR/templates/projects/PROJECTS.md" "$DS_DIR/projects/PROJECTS.md"
+  echo "  Created design-system/projects/"
+fi
+
 # Always stamp agent_version (runs on fresh install and updates)
 if [ -f "$DS_DIR/config.md" ]; then
   sed -i.bak "s/- agent_version: .*/- agent_version: $VERSION/" "$DS_DIR/config.md" && rm -f "$DS_DIR/config.md.bak"
@@ -43,7 +50,7 @@ fi
 
 # --- Step 2: Copy skills (always overwrite to pick up updates) ---
 mkdir -p "$SKILLS_DIR"
-for skill_dir in "$SCRIPT_DIR/skills"/ds-* "$SCRIPT_DIR/skills"/ddd-* "$SCRIPT_DIR/skills"/build-frame "$SCRIPT_DIR/skills"/resolve-token "$SCRIPT_DIR/skills"/resolve-component "$SCRIPT_DIR/skills"/validate-component "$SCRIPT_DIR/skills"/write-memory; do
+for skill_dir in "$SCRIPT_DIR/skills"/ds-* "$SCRIPT_DIR/skills"/ddd-* "$SCRIPT_DIR/skills"/pd-* "$SCRIPT_DIR/skills"/product-designer "$SCRIPT_DIR/skills"/build-frame "$SCRIPT_DIR/skills"/resolve-token "$SCRIPT_DIR/skills"/resolve-component "$SCRIPT_DIR/skills"/validate-component "$SCRIPT_DIR/skills"/write-memory; do
   skill_name="$(basename "$skill_dir")"
   target="$SKILLS_DIR/$skill_name"
   rm -rf "$target"
