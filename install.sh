@@ -19,6 +19,8 @@ fi
 PROJECT_PATH="$(cd "$1" && pwd)"
 DS_DIR="$PROJECT_PATH/design-system"
 SKILLS_DIR="$PROJECT_PATH/.claude/skills"
+HOOKS_DIR="$PROJECT_PATH/.claude/hooks"
+SETTINGS_FILE="$PROJECT_PATH/.claude/settings.json"
 CLAUDE_MD="$PROJECT_PATH/CLAUDE.md"
 
 echo "Installing DDD v$VERSION into: $PROJECT_PATH"
@@ -35,18 +37,51 @@ else
   sed -i.bak "s/- agent_version: .*/- agent_version: $VERSION/" "$DS_DIR/config.md" && rm -f "$DS_DIR/config.md.bak"
 fi
 
-# --- Step 2: Copy skills ---
+# --- Step 2: Copy skills (always overwrite to pick up updates) ---
 mkdir -p "$SKILLS_DIR"
-for skill_dir in "$SCRIPT_DIR/skills"/ds-* "$SCRIPT_DIR/skills"/build-frame "$SCRIPT_DIR/skills"/resolve-token "$SCRIPT_DIR/skills"/resolve-component "$SCRIPT_DIR/skills"/validate-component "$SCRIPT_DIR/skills"/write-memory; do
+for skill_dir in "$SCRIPT_DIR/skills"/ds-* "$SCRIPT_DIR/skills"/ddd-* "$SCRIPT_DIR/skills"/build-frame "$SCRIPT_DIR/skills"/resolve-token "$SCRIPT_DIR/skills"/resolve-component "$SCRIPT_DIR/skills"/validate-component "$SCRIPT_DIR/skills"/write-memory; do
   skill_name="$(basename "$skill_dir")"
   target="$SKILLS_DIR/$skill_name"
-  if [ -e "$target" ]; then
-    echo "  $skill_name already exists — skipping"
-  else
-    cp -r "$skill_dir" "$target"
-    echo "  Copied $skill_name"
-  fi
+  rm -rf "$target"
+  cp -r "$skill_dir" "$target"
+  echo "  Installed $skill_name"
 done
+
+# Stamp installed version for update checks
+echo "$VERSION" > "$SKILLS_DIR/.ddd-version"
+echo "  Stamped version $VERSION"
+
+# --- Step 2b: Install version-check hook ---
+mkdir -p "$HOOKS_DIR"
+cp "$SCRIPT_DIR/hooks/ddd-version-check.sh" "$HOOKS_DIR/ddd-version-check.sh"
+chmod +x "$HOOKS_DIR/ddd-version-check.sh"
+echo "  Installed version-check hook"
+
+# Merge hook config into .claude/settings.json (create if missing, preserve existing config)
+if [ ! -f "$SETTINGS_FILE" ]; then
+  echo '{}' > "$SETTINGS_FILE"
+fi
+node -e "
+const fs = require('fs');
+const file = '$SETTINGS_FILE';
+let settings = {};
+try { settings = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) {}
+if (!settings.hooks) settings.hooks = {};
+if (!settings.hooks.SessionStart) settings.hooks.SessionStart = [];
+const alreadyInstalled = settings.hooks.SessionStart.some(
+  h => h.hooks && h.hooks.some(hh => hh.command && hh.command.includes('ddd-version-check'))
+);
+if (!alreadyInstalled) {
+  settings.hooks.SessionStart.push({
+    matcher: 'startup',
+    hooks: [{ type: 'command', command: 'bash \".claude/hooks/ddd-version-check.sh\"' }]
+  });
+  fs.writeFileSync(file, JSON.stringify(settings, null, 2) + '\n');
+  console.log('  Registered SessionStart hook in .claude/settings.json');
+} else {
+  console.log('  SessionStart hook already registered — skipping');
+}
+"
 
 # --- Step 3: Append CLAUDE.md section ---
 MARKER="# --- Design System Agent (DDD) ---"
