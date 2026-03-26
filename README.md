@@ -41,7 +41,7 @@ Claude never invents tokens or components. If something isn't in the knowledge-b
 | Requirement | Notes |
 |---|---|
 | [Claude Code](https://claude.com/claude-code) | CLI v1.0+ |
-| [Figma Console MCP](https://github.com/anthropics/figma-console-mcp) | Must be connected in Claude Code |
+| [Figma Console MCP](https://github.com/southleft/figma-console-mcp) | Must be connected in Claude Code |
 | A Figma file with a UI kit | shadcn, Radix, Material, or custom |
 
 ---
