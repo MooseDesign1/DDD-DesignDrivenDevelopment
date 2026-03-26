@@ -42,7 +42,7 @@ Claude never invents tokens or components. If something isn't in the knowledge-b
 | Requirement | Notes |
 |---|---|
 | [Claude Code](https://claude.com/claude-code) | CLI v1.0+ |
-| [Figma Console MCP](https://github.com/anthropics/figma-console-mcp) | Must be connected in Claude Code |
+| [Figma Console MCP](https://github.com/southleft/figma-console-mcp) | Must be connected in Claude Code |
 | A Figma file with a UI kit | shadcn, Radix, Material, or custom |
 
 ---
@@ -50,8 +50,8 @@ Claude never invents tokens or components. If something isn't in the knowledge-b
 ## Installation
 
 ```bash
-cd your-project
-npx design-driven-development
+cd /your project 
+npx design-driven-development 
 ```
 
 No clone required. The package downloads, installs into your project, and is discarded. Your project is fully self-contained.
