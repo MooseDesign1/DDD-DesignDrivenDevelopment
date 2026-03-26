@@ -11,9 +11,9 @@
   Design-Driven Development
 ```
 
-**A Claude Code plugin that connects your Figma UI kit to your codebase.**
+**A Claude Code plugin that connects your Figma design system to your codebase.**
 
-Scans your design system, builds a structured knowledge-base, and gives Claude precise project-specific context to build, document, and audit components — without hallucinating tokens or inventing conventions.
+Two agents. One for building components. One for designing full products.
 
 ![Version](https://img.shields.io/badge/version-0.2.0-A259FF?style=flat-square)
 ![Claude Code](https://img.shields.io/badge/Claude_Code-required-0ACF83?style=flat-square)
@@ -50,8 +50,8 @@ Claude never invents tokens or components. If something isn't in the knowledge-b
 ## Installation
 
 ```bash
-cd /your project 
-npx design-driven-development 
+cd /your project
+npx design-driven-development
 ```
 
 No clone required. The package downloads, installs into your project, and is discarded. Your project is fully self-contained.
@@ -60,7 +60,7 @@ What gets installed:
 
 ```
 your-project/
-├── design-system/          ← knowledge-base, memory, config
+├── design-system/          ← knowledge-base, memory, config, projects
 ├── .claude/
 │   ├── skills/             ← all DDD skill files
 │   ├── hooks/              ← version-check hook (runs on session startup)
@@ -121,9 +121,22 @@ Then it scans your entire Figma file and writes:
 
 ---
 
-## The `/ds-designer` Agent
+## The Two Agents
 
-The primary way to work with DDD. A unified agent that handles all component building, restyling, and theme work in a single conversational flow.
+DDD ships with two primary agents. Use whichever fits the work.
+
+| Agent | Command | What it does |
+|---|---|---|
+| **Design System Designer** | `/design-system-designer` | Build, restyle, and theme individual components |
+| **Product Designer** | `/product-designer` | Take a product from brief to fully designed, annotated, and handed-off flows |
+
+Both agents work from the same knowledge-base and share component and token context.
+
+---
+
+## `/design-system-designer` — Component Agent
+
+The primary way to work with your design system. A unified agent that handles all component building, restyling, and theme work in a single conversational flow.
 
 **You don't need to know which command to use.** Just describe what you want:
 
@@ -137,7 +150,7 @@ The primary way to work with DDD. A unified agent that handles all component bui
 
 ### How it classifies your intent
 
-`/ds-designer` (or any of the phrases above) identifies what kind of work you need, then routes to the right workflow:
+`/design-system-designer` identifies what kind of work you need, then routes to the right workflow:
 
 | What you say | Route |
 |---|---|
@@ -152,25 +165,23 @@ If your request is ambiguous, it asks one question with a native picker — no o
 
 When you ask to *change how a component looks*, the agent never jumps straight to implementation. It runs an exploration phase first:
 
-1. **Inspect** — reads the component's current fills, strokes, and effects before touching anything. Gradient strokes and bound effect styles are preserved.
-2. **Explore** — builds 3–4 concept frames on a temporary `Exploration - <ComponentName>` page in Figma. Screenshots each direction and presents them.
-3. **You pick** — a native question widget presents the concepts. Implementation doesn't start until you make an explicit choice.
-4. **Token audit** — maps every visual property of the chosen direction to existing tokens. Lists gaps and waits for your confirmation before creating anything new.
-5. **Implement** — applies the chosen direction using variable bindings only. Never writes raw hex values.
-6. **Verify** — screenshots the final result, checks against the spec.
+1. **Inspect** — reads the component's current fills, strokes, and effects before touching anything
+2. **Explore** — builds 3–4 concept frames on a temporary `Exploration - <ComponentName>` page in Figma
+3. **You pick** — implementation doesn't start until you make an explicit choice
+4. **Token audit** — maps every visual property to existing tokens, lists gaps, waits for confirmation
+5. **Implement** — applies the chosen direction using variable bindings only. Never writes raw hex values
+6. **Verify** — screenshots the final result
 
 ### Workflow: Theme change
 
-When you want to change colors, apply a new theme, or add a dark mode:
-
-1. **Load alias rules** — reads `theming-conventions.md` to understand your token architecture. Detects which collections are primitives vs. semantic aliases, and which modes are mutable vs. read-only.
-2. **Plan** — shows every primitive and alias that will change before touching anything. Reference modes (e.g., `shadcn`, `shadcn-dark`) are flagged as read-only and never modified.
-3. **Execute** — adds new primitives to the raw color collection first, then updates semantic variables as `VARIABLE_ALIAS` references. **Never writes raw hex onto semantic tokens.**
-4. **Validate** — screenshots affected components to confirm the theme propagated correctly.
+1. **Load alias rules** — reads `theming-conventions.md` to understand your token architecture
+2. **Plan** — shows every primitive and alias that will change before touching anything
+3. **Execute** — adds new primitives first, then updates semantic variables as `VARIABLE_ALIAS` references
+4. **Validate** — screenshots affected components to confirm the theme propagated
 
 ### Session checkpoints
 
-For complex work, `/ds-designer` writes progress to `design-system/memory/active_session.md` after each phase. If you need to `/clear` context mid-exploration, your work isn't lost — the agent reads the checkpoint on the next session and offers to resume:
+For complex work, `/design-system-designer` writes progress to `design-system/memory/active_session.md` after each phase. If you need to `/clear` context mid-exploration, your work isn't lost:
 
 ```
 Found an in-progress session: visual change on Button.
@@ -181,120 +192,207 @@ Resume from token audit, or start fresh?
 
 ---
 
-## Commands
+## `/product-designer` — Product Design Agent
 
-### Scanning & Knowledge-Base
+<div align="center">
+
+```
+   ▄███████████▄  ✦
+  █  ◑       ◑  █
+  █      ◡      █
+   ▀███████████▀
+  ╱   ▄█████▄   ╲
+
+  Brief in. Shipped designs out.  ✦
+```
+
+</div>
+
+An end-to-end product design agent that follows the **Double Diamond** framework — from a brief or PRD all the way to fully designed, annotated, and development-ready flows in Figma.
+
+**Start a new project:**
+
+```
+/pd:new-project
+```
+
+Or just describe what you want:
+
+```
+"I need to design a donor portal"
+"Let's concept the checkout flow"
+"Design the onboarding screens"
+"Create the handoff for the dashboard"
+```
+
+### The Double Diamond workflow
+
+```
+DISCOVER          DEFINE            DEVELOP           DELIVER
+────────          ──────            ───────           ───────
+Ingest brief  →   User flows    →   Concepts      →   Hi-fi screens
+Research &        IA mapping        Lo-fi Figma       Annotations
+ideation          Screen            Direction         Handoff doc
+                  inventory         selection
+```
+
+Each phase has a dedicated command, or let `/product-designer` infer where you are and route automatically.
+
+### Phase commands
+
+| Command | Phase | What happens |
+|---|---|---|
+| `/pd:new-project` | Init | Ingest or write a project brief, initialize project memory |
+| `/pd:discover` | Discover | Research synthesis, design challenge framing |
+| `/pd:define` | Define | User flows, IA, screen inventory, concept queue |
+| `/pd:concept` | Develop | 3 written directions → lo-fi Figma → iterate → lock |
+| `/pd:design` | Deliver | Hi-fi screens built with your design system |
+| `/pd:annotate` | Deliver | Logic and behavior annotations next to each screen |
+| `/pd:handoff` | Deliver | Figma handoff page + markdown spec doc |
+| `/pd:status` | Any | Project dashboard — phase, screens, gaps, what's next |
+| `/pd:resume` | Any | Resume after a `/clear` — restores from checkpoint |
+
+### Starting a project
+
+`/pd:new-project` asks one question first:
+
+```
+Do you have a brief or PRD ready?
+[Yes — I have one]   [No — help me write one]
+```
+
+If **yes**: paste it, share a URL, or link a Figma file — the agent reads it and extracts key signals.
+
+If **no**: the agent runs a series of focused questions (product, user, problem, flows, platforms, constraints, success metrics) and writes a structured brief for you.
+
+### Concepting
+
+For each item in your concept queue, the agent:
+
+1. Writes **3 distinct directions** in text — named, described, with tradeoffs called out
+2. You pick one (or ask for a mix)
+3. Builds a **low-fidelity Figma exploration** — grayscale, structural, fast
+   - Section named: `[Flow Name — Platform — Concept N]`
+4. Screenshots and presents it — iterate up to 2 rounds
+5. You lock a direction — it's saved to memory before moving on
+
+Lo-fi is intentional. The goal is structure and flow, not polish. Polish happens in `/pd:design`.
+
+### Component gaps
+
+When a screen needs a component that doesn't exist in your design system, the agent doesn't block:
+
+1. Logs the gap to `component-gaps.md`
+2. Asks: build it now (triggers `ds-plan` → `ds-build`) or use a placeholder and continue
+3. If built now: the new component is added to your design system and the screen is completed
+4. If placeholder: a labeled frame holds the spot and the gap is tracked for batch resolution
+
+### Annotations
+
+After screens are designed, `/pd:annotate` adds behavioral context next to each screen (60px gap):
+
+```
+question: "How would you like annotations?"
+[Custom annotation component]   [Figma native annotations]
+```
+
+If no annotation component exists in your design system, the agent builds one.
+
+Each annotation covers: interactions, states, validation rules, empty states, navigation targets, and edge cases.
+
+### Handoff output
+
+`/pd:handoff` produces two things:
+
+**Figma handoff page** — annotated screens organized by flow, with a cover frame showing project name, version, and date.
+
+**Markdown spec doc** (`design-system/projects/<slug>/handoff/<slug>-handoff.md`) — contains:
+- Screen-by-screen purpose, states, and component map
+- Numbered logic and behavior (from annotations)
+- Acceptance criteria (testable, specific)
+- Navigation and routing table
+- Component gaps and their resolution status
+- Design tokens used
+- Open questions for engineering
+
+### Context resilience
+
+Every phase writes a checkpoint to `active_session.md`. After any `/clear`:
+
+```
+/pd:resume
+```
+
+The agent reads the checkpoint, shows where you left off, and continues from the next incomplete step — no re-explaining needed.
+
+Project memory lives in `design-system/projects/<slug>/` and persists indefinitely across sessions.
+
+---
+
+## Commands Reference
+
+### Design System
 
 #### `/ds-init`
 Bootstrap scan of your Figma file. Auto-triggered on first session if the knowledge-base is empty.
 
-**What it does:**
-- Scans all variable collections, components, text styles, color styles, and effect styles
-- Falls back to async Figma APIs on dynamic-page documents (never silently drops styles)
-- Detects alias chain architecture — if your semantic tokens reference primitives via `VARIABLE_ALIAS`, documents this as a hard constraint in `theming-conventions.md`
-- Classifies each token mode as **brand** (mutable, safe to customize) or **reference** (read-only, do not modify)
-- Reads documentation/about pages in your Figma file and incorporates theming instructions
-- Infers naming conventions and assigns confidence levels — asks you to confirm anything ambiguous
+Scans all variable collections, components, text styles, color styles, and effect styles. Detects alias chain architecture and token mode semantics.
 
-**When to use:** First time setting up a project, or after a major redesign that changed your token/component structure.
+**When to use:** First-time setup, or after a major redesign.
 
 ---
 
 #### `/ds-update`
-Re-scan Figma and show what changed since the last scan.
-
-**What it does:**
-- Runs the same scans as `/ds-init` (with async fallback for styles)
-- Computes a semantic diff: tokens added/removed/changed, components added/removed/modified, styles changed
-- Flags potential renames (component disappeared, similar one appeared)
-- Requires your confirmation before writing — shows the full diff first
-- Never overwrites user annotations in knowledge-base files
-
-**When to use:** After making changes in Figma (new components, updated tokens, new styles).
+Re-scan Figma and show what changed since the last scan. Computes a semantic diff and requires confirmation before writing.
 
 ---
 
 #### `/ds-audit`
 System-wide compliance check of all built components against your discovered conventions.
 
-**When to use:** Before a release, or when onboarding new team members to verify consistency.
-
 ---
 
-### Building & Editing
+#### `/design-system-designer` ← component work starts here
+The unified component agent. Handles new components, visual changes, structural variants, and theme work.
 
-#### `/ds-designer` ← start here
-The unified agent. Handles new components, visual changes, structural variants, and theme work. See [The `/ds-designer` Agent](#the-ds-designer-agent) above for full details.
-
-**Natural language triggers** (no slash command needed):
-- "build a [component]", "I need a [component]", "create a [component]"
-- "make the [component] look [adjective]", "restyle the [component]", "redesign the [component]"
-- "add a [state/variant] to [component]"
-- "change the theme", "add dark mode", "change the brand color"
+**Also triggers on:** "build a [component]", "restyle the [component]", "add a [variant] to [component]", "change the theme", "add dark mode"
 
 ---
 
 #### `/ds-build`
-Build a single component in Figma from a spec. Called by `/ds-designer` internally, but available directly for power users.
-
-**What it does:**
-1. Loads or creates a build spec for the component
-2. Runs a token audit — lists every visual property, checks coverage, surfaces gaps before building
-3. Creates the component inside a Section/Frame (never on blank canvas)
-4. Binds all visual properties as variable references — never raw hex values
-5. Sets up variant structure if specified
-6. Screenshots and verifies the result (up to 3 iterations)
-7. Runs post-build validation checklist
-
-**Rules:**
-- Requires a build spec (runs a condensed planning interview if none exists)
-- All style bindings use async Figma setters (`setStrokeStyleIdAsync`, `setEffectStyleIdAsync`)
-- Gaps are surfaced and confirmed before any tokens are created
+Build a single component from a spec. Called by `/design-system-designer` internally, available directly for power users.
 
 ---
 
 #### `/ds-add-variant`
-Add a variant or state to an existing component. Called by `/ds-designer` internally, but available directly.
+Add a variant or state to an existing component.
 
-**What it does — for structural variants** (new property value, boolean state):
-1. Identifies target component and verifies it in Figma
-2. Inspects current state — reads fills, strokes, effects before any modification
-3. Runs token audit for the new variant's visual properties
-4. Duplicates an appropriate existing variant, renames per conventions, binds tokens
-5. Screenshots the full component set with the new variant
+---
 
-**What it does — for visual/style changes** (anything that changes how a component looks):
-1. Classifies the request as visual before proceeding
-2. Runs the full exploration phase (concept frames, screenshot, user picks)
-3. Inspects and preserves existing gradient strokes and bound effect styles
-4. Token audit before implementation
-5. Implements with variable bindings only
+#### `/ds-plan`
+Interactive planning interview that produces a confirmed build spec consumed by `/ds-build`.
 
 ---
 
 #### `/ds-verify`
 Screenshot-based visual verification of a component against its build spec.
 
-**When to use:** After building, or to spot-check an existing component.
-
 ---
 
-### Documentation & Handoff
-
 #### `/ds-spec`
-Generate an engineering implementation spec for a component — props, variants, token mapping, accessibility, usage examples.
+Generate an engineering implementation spec — props, variants, token mapping, accessibility, usage examples.
 
 **Output:** `design-system/memory/specs/<ComponentName>-engineering.md`
 
 ---
 
 #### `/ds-doc`
-Generate Figma-based documentation for a component — intended for design system documentation sites or Figma annotations.
+Generate Figma-based documentation for a component.
 
 ---
 
 #### `/ds-handoff`
-Create tickets in your configured tracker (Jira or Linear) for component handoff to engineering. Pulls data from the build spec and engineering spec.
+Create tickets in Jira or Linear for component handoff to engineering.
 
 <div align="center">
 
@@ -312,36 +410,79 @@ Create tickets in your configured tracker (Jira or Linear) for component handoff
 
 ---
 
-### Utilities
-
 #### `/ds-token`
 Find the right token for a design intent without building anything.
 
-**Usage:** "What token should I use for a card background?" or "Which token covers disabled text?"
-
-Returns a high-confidence match, a list of candidates if ambiguous, or logs a gap to `TOKEN-GAPS.md` if nothing fits.
+**Usage:** "What token should I use for a card background?" → returns a match, candidates, or logs a gap.
 
 ---
 
 #### `/ds-feedback`
-Capture workflow preferences outside of a build session. Tell DDD how you like to work and it will remember across all future sessions.
-
-**Examples:**
-- "Take screenshots more frequently during builds"
-- "Always ask before creating new tokens"
-- "Use kebab-case for all new component names"
-
-Preferences are written to `design-system/memory/feedback_*.md` and applied automatically by every skill.
+Capture workflow preferences. Tell DDD how you like to work — saved to `feedback_*.md` and applied by every skill.
 
 ---
 
 #### `/ds-memory`
-View and manage persistent memory files — registry, token gaps, decisions, conventions log, and active session state.
+View and manage persistent memory — registry, token gaps, decisions, conventions log, session state.
 
 ---
 
 #### `/ds-help`
-Show current system status and all available commands. Includes component count, token count, last scan date, and any pending token gaps.
+Show current system status and all available commands.
+
+---
+
+### Product Design
+
+#### `/product-designer` ← product work starts here
+The unified product design agent. Infers your intent and routes to the right phase.
+
+**Also triggers on:** "start a new project", "design the [flow/screen]", "concept the [screen]", "create handoff", "where are we"
+
+---
+
+#### `/pd:new-project`
+Initialize a new product design project. Ingests or writes a project brief.
+
+---
+
+#### `/pd:discover`
+Discovery phase — research synthesis, problem framing, design challenge statement.
+
+---
+
+#### `/pd:define`
+Define phase — user flows, IA, screen inventory, concept queue.
+
+---
+
+#### `/pd:concept`
+Concept phase — 3 written directions, lo-fi Figma exploration, iterate, lock.
+
+---
+
+#### `/pd:design`
+Design phase — hi-fi screens built with your design system components.
+
+---
+
+#### `/pd:annotate`
+Annotate screens with interaction logic, states, and edge cases.
+
+---
+
+#### `/pd:handoff`
+Generate Figma handoff page and markdown spec document.
+
+---
+
+#### `/pd:status`
+Project dashboard — phase progress, screen count, gaps, and what's next.
+
+---
+
+#### `/pd:resume`
+Resume an in-progress project after a context reset.
 
 ---
 
@@ -350,23 +491,19 @@ Show current system status and all available commands. Includes component count,
 #### `/ddd-update`
 Upgrade DDD skills to the latest version without touching your knowledge-base.
 
-**Triggers:** `/ddd-update`, "update DDD", "upgrade DDD", or automatically when the version nudge appears.
-
 **What it does:**
 1. Shows your current installed version vs. the latest
 2. Runs `npx design-driven-development@latest .`
 3. Confirms the version stamp changed
 4. Syncs `agent_version` in `config.md`
 
-Your `design-system/` knowledge-base, tokens, components, memory, and config are **never touched** by an update — only the skill files in `.claude/skills/` are refreshed.
+Your `design-system/` knowledge-base, tokens, components, memory, and projects are **never touched** — only the skill files in `.claude/skills/` are refreshed.
 
-**Version nudge:** At the start of each session, DDD checks npm for a newer version. If one exists, you'll see:
+**Version nudge:** At the start of each session, DDD checks npm for a newer version. If one exists:
 
 ```
 🔔 DDD v0.x.x is available (installed: v0.2.0). Run /ddd-update to upgrade your skills.
 ```
-
-The check uses a 2-second timeout and fails silently if you're offline.
 
 ---
 
@@ -384,15 +521,27 @@ your-project/
 │   │   ├── styles.md                # Text, color, and effect styles
 │   │   ├── conventions.md           # Inferred naming and structure patterns
 │   │   └── theming-conventions.md   # Alias chain rules and mode semantics (if detected)
-│   └── memory/                      # Claude-managed — updated throughout sessions
-│       ├── REGISTRY.md              # Per-component build status and history
-│       ├── TOKEN-GAPS.md            # Tokens Claude needed but didn't find
-│       ├── active_session.md        # In-progress session checkpoint (resume after /clear)
-│       ├── DECISIONS-ARCHIVE.md
-│       ├── CONVENTIONS-LOG.md
-│       ├── AUDIT-LOG.md
-│       ├── feedback_*.md            # Saved workflow preferences
-│       └── specs/                   # Build specs and engineering specs per component
+│   ├── memory/                      # Claude-managed — updated throughout sessions
+│   │   ├── REGISTRY.md              # Per-component build status and history
+│   │   ├── TOKEN-GAPS.md            # Tokens Claude needed but didn't find
+│   │   ├── active_session.md        # In-progress session checkpoint (resume after /clear)
+│   │   ├── DECISIONS-ARCHIVE.md
+│   │   ├── CONVENTIONS-LOG.md
+│   │   ├── AUDIT-LOG.md
+│   │   ├── feedback_*.md            # Saved workflow preferences
+│   │   └── specs/                   # Build specs and engineering specs per component
+│   └── projects/                    # Product Designer — one folder per project
+│       ├── PROJECTS.md              # All projects: name, phase, status
+│       └── <project-slug>/
+│           ├── brief.md             # Project brief (ingested or written)
+│           ├── research.md          # Discovery notes and design challenge
+│           ├── flows.md             # User flows and IA
+│           ├── screen-inventory.md  # All screens: status, figma node, flow
+│           ├── directions.md        # Locked concept directions per item
+│           ├── component-gaps.md    # Missing DS components and resolution status
+│           ├── active_session.md    # Phase checkpoint (resume after /clear)
+│           └── handoff/
+│               └── <slug>-handoff.md  # Markdown spec doc for engineering
 └── .claude/
     ├── skills/                      # All DDD skill files (overwritten on update)
     │   └── .ddd-version             # Installed version stamp
@@ -405,7 +554,9 @@ your-project/
 >
 > **`memory/`** is Claude-managed — read and written freely during sessions.
 >
-> **`active_session.md`** is written automatically during complex workflows so progress survives a `/clear`. Delete it manually if you want to discard an in-progress session.
+> **`projects/`** is Product Designer memory — persists indefinitely, one folder per project.
+>
+> **`active_session.md`** exists in both `memory/` (component work) and `projects/<slug>/` (product work). Both survive a `/clear` and power the resume flow.
 
 ---
 
@@ -413,17 +564,21 @@ your-project/
 
 These rules are injected into every Claude session via `CLAUDE.md`:
 
-**Token boundary** — Claude only uses tokens present in `tokens.md`. If no suitable token exists, it logs the gap to `TOKEN-GAPS.md` and waits for your confirmation before proceeding.
+**Token boundary** — Claude only uses tokens present in `tokens.md`. If no suitable token exists, it logs the gap to `TOKEN-GAPS.md` and waits for your confirmation.
 
-**Alias chain enforcement** — If `theming-conventions.md` exists, Claude treats semantic variables as alias pointers. It will never write a raw hex value onto a semantic token — gaps are surfaced, the correct primitive-first workflow is followed.
+**Alias chain enforcement** — Semantic variables are alias pointers. Claude will never write a raw hex value onto a semantic token.
 
-**Explore before implementing** — Any request to change how a component looks triggers an exploration phase with concept frames before the real component is touched.
+**Explore before implementing** — Any request to change how a component looks triggers an exploration phase before the real component is touched.
 
-**Inspect before modifying** — Existing strokes, effects, and fills are read and documented before any modification. Gradient strokes and named effect styles are preserved unless you explicitly ask to replace them.
+**Inspect before modifying** — Existing strokes, effects, and fills are read and documented before any modification.
 
-**Ambiguity** — If anything is unclear (which token, which component, how to interpret a design intent), Claude outputs a numbered question list before taking any Figma action.
+**Concepts before hi-fi** — Product design work gets 3 written directions and a lo-fi exploration before any final screen is built.
+
+**Ambiguity** — If anything is unclear, Claude outputs a numbered question list before taking any Figma action.
 
 **Hard stops** — Claude will not apply an unconfirmed token, will not contradict a convention without approval, and will not modify an existing component unless explicitly asked.
+
+**Context resilience** — Both agents checkpoint progress after every phase. After any `/clear`, use `/design-system-designer` or `/pd:resume` to pick up exactly where you left off.
 
 ---
 
@@ -451,6 +606,8 @@ Each project gets its own independent knowledge-base and memory. Install into as
 npx design-driven-development ~/projects/app-one
 npx design-driven-development ~/projects/app-two
 ```
+
+Within a single project, the Product Designer can manage multiple product design projects simultaneously — each with its own brief, flows, screens, and handoff doc under `design-system/projects/`.
 
 ---
 
