@@ -24,7 +24,7 @@ Log a missing component and coordinate resolution.
 
 ## Step 1 — Check if gap already logged
 
-Read `design-system/projects/<slug>/component-gaps.md`.
+Read `projects/<slug>/component-gaps.md`.
 If the component is already listed → update the `screens` column to include the new screen. Do not duplicate.
 
 ---

@@ -16,9 +16,9 @@ Research, ideation, and problem framing. The first diamond of Double Diamond.
 ## Step 1 — Load context
 
 Read:
-- `design-system/projects/<slug>/brief.md` — project brief
-- `design-system/projects/<slug>/active_session.md` — current phase and checkpoint
-- `design-system/projects/PROJECTS.md` — identify active project slug
+- `projects/<slug>/brief.md` — project brief
+- `projects/<slug>/active_session.md` — current phase and checkpoint
+- `projects/PROJECTS.md` — identify active project slug
 
 If no active project is found, tell the user:
 > "No active project found. Run `/pd:new-project` to start one."
@@ -98,7 +98,7 @@ If yes → ask for principles or suggest based on the challenge (e.g., "Progress
 
 ## Step 5 — Write research.md
 
-Write `design-system/projects/<slug>/research.md`:
+Write `projects/<slug>/research.md`:
 ```markdown
 # Research & Discovery: <Project Name>
 
@@ -144,7 +144,7 @@ Invoke pd-write-memory.
 ────────────────────────────────────────
 ✅  Discovery complete
 
-Research saved to design-system/projects/<slug>/research.md
+Research saved to projects/<slug>/research.md
 
 **What's next:** /pd:define — Map out user flows and build your screen inventory
 
