@@ -50,7 +50,7 @@ Claude never invents tokens or components. If something isn't in the knowledge-b
 ## Installation
 
 ```bash
-cd /your project
+
 npx design-driven-development
 ```
 
