@@ -51,7 +51,7 @@ Claude never invents tokens or components. If something isn't in the knowledge-b
 
 ```bash
 
-npx design-driven-development
+npx design-driven-development@latest
 ```
 
 No clone required. The package downloads, installs into your project, and is discarded. Your project is fully self-contained.
