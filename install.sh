@@ -50,7 +50,7 @@ fi
 
 # --- Step 2: Copy skills (always overwrite to pick up updates) ---
 mkdir -p "$SKILLS_DIR"
-for skill_dir in "$SCRIPT_DIR/skills"/ds-* "$SCRIPT_DIR/skills"/ddd-* "$SCRIPT_DIR/skills"/pd-* "$SCRIPT_DIR/skills"/product-designer "$SCRIPT_DIR/skills"/build-frame "$SCRIPT_DIR/skills"/resolve-token "$SCRIPT_DIR/skills"/resolve-component "$SCRIPT_DIR/skills"/validate-component "$SCRIPT_DIR/skills"/write-memory; do
+for skill_dir in "$SCRIPT_DIR/skills"/ds-* "$SCRIPT_DIR/skills"/ddd-* "$SCRIPT_DIR/skills"/pd-* "$SCRIPT_DIR/skills"/product-designer "$SCRIPT_DIR/skills"/build-frame "$SCRIPT_DIR/skills"/resolve-token "$SCRIPT_DIR/skills"/resolve-component "$SCRIPT_DIR/skills"/validate-component "$SCRIPT_DIR/skills"/write-memory "$SCRIPT_DIR/skills"/ddd-help "$SCRIPT_DIR/skills"/design-system-help "$SCRIPT_DIR/skills"/product-design-help; do
   skill_name="$(basename "$skill_dir")"
   target="$SKILLS_DIR/$skill_name"
   rm -rf "$target"
