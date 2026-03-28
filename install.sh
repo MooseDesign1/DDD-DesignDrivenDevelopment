@@ -35,11 +35,12 @@ else
   rm -f "$DS_DIR/claude-md-section.md"
 fi
 
-# Scaffold projects/ directory (safe to run on updates — never overwrites existing projects)
-if [ ! -d "$DS_DIR/projects" ]; then
-  mkdir -p "$DS_DIR/projects"
-  cp "$SCRIPT_DIR/templates/projects/PROJECTS.md" "$DS_DIR/projects/PROJECTS.md"
-  echo "  Created design-system/projects/"
+# Scaffold projects/ directory at repo root (safe to run on updates — never overwrites existing projects)
+PROJECTS_DIR="$PROJECT_PATH/projects"
+if [ ! -d "$PROJECTS_DIR" ]; then
+  mkdir -p "$PROJECTS_DIR"
+  cp "$SCRIPT_DIR/templates/projects/PROJECTS.md" "$PROJECTS_DIR/PROJECTS.md"
+  echo "  Created projects/"
 fi
 
 # Always stamp agent_version (runs on fresh install and updates)
