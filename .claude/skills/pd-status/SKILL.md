@@ -1,5 +1,6 @@
 ---
 name: pd-status
+model: haiku-4-5
 description: >
   Show the current product design project status dashboard. Use when the user types
   /pd:status, asks "where are we", "what's done", "show me the project", "progress",
@@ -14,7 +15,7 @@ Show a full project overview: phase, screen inventory, gaps, and what's next.
 
 ## Step 1 — Identify active project
 
-Read `design-system/projects/PROJECTS.md`.
+Read `projects/PROJECTS.md`.
 
 If one project with `status: in_progress` → use it.
 If multiple in-progress projects → ask:
@@ -33,11 +34,11 @@ If no active project → show PROJECTS.md summary and suggest `/pd:new-project`.
 ## Step 2 — Load project files
 
 Read:
-- `design-system/projects/<slug>/brief.md`
-- `design-system/projects/<slug>/screen-inventory.md`
-- `design-system/projects/<slug>/component-gaps.md`
-- `design-system/projects/<slug>/active_session.md`
-- `design-system/projects/<slug>/directions.md`
+- `projects/<slug>/brief.md`
+- `projects/<slug>/design/screen-inventory.md`
+- `projects/<slug>/design/component-gaps.md`
+- `projects/<slug>/design/active_session.md`
+- `projects/<slug>/design/directions.md`
 
 ---
 

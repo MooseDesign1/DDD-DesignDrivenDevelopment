@@ -1,5 +1,6 @@
 ---
 name: product-designer
+model: opus-4-6
 description: >
   Main product design agent. Triggered by /product-designer, or natural language such as:
   "start a new project", "I have a brief", "let's design", "work on the [project/flow/screen]",
@@ -18,7 +19,7 @@ Unified agent for end-to-end product design: from brief to fully designed, annot
 ## Step 1 — Load context and check for in-progress session
 
 Read these files (skip gracefully if missing):
-- `design-system/projects/PROJECTS.md` — all projects and their current phase
+- `projects/PROJECTS.md` — all projects and their current phase
 - `design-system/memory/active_session.md` — in-progress checkpoint
 
 **If `active_session.md` exists and has `status: in_progress` and `agent: product-designer`:**
@@ -83,5 +84,7 @@ options:
 - Never assume which project to work on if multiple exist — ask
 - Surface the "What's next" footer at the end of every phase
 - If context usage is above 60% → warn: "Context is getting full. Your work is checkpointed — you can `/clear` and run `/product-designer` to resume."
-- All project memory lives under `design-system/projects/<project-slug>/`
+- All project design memory lives under `projects/<project-slug>/design/`
+- Brief lives at `projects/<project-slug>/brief.md` (shared with planner)
+- Handoff output goes to `projects/<project-slug>/handoff/`
 - Never modify `design-system/knowledge-base/` unless a component gap was resolved via ds-plan/ds-build

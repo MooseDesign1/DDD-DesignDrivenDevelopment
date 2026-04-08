@@ -1,5 +1,6 @@
 ---
 name: resolve-token
+model: haiku-4-5
 description: >
   Internal skill for matching a design intent to a token from the knowledge-base.
   Called by ds-token, ds-build, ds-plan, and ds-add-variant when a token need arises.

@@ -1,5 +1,6 @@
 ---
 name: pd-resume
+model: sonnet-4-6
 description: >
   Resume an in-progress product design project after a context reset. Use when the user
   types /pd:resume, says "resume", "continue the project", "pick up where we left off",
@@ -14,7 +15,7 @@ Restore project context from memory and continue from the last checkpoint.
 
 ## Step 1 — Load checkpoint
 
-Read `design-system/projects/<slug>/active_session.md`.
+Read `projects/<slug>/design/active_session.md`.
 
 If no `active_session.md` exists or `status: complete` → tell user:
 > "No in-progress session found. Use `/pd:status` to see your projects or `/pd:new-project` to start one."

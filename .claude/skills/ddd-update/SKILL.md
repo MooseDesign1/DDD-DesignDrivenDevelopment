@@ -1,5 +1,6 @@
 ---
 name: ddd-update
+model: haiku-4-5
 description: >
   Update DDD to the latest version. Triggered by /ddd-update, "update DDD",
   "update the design system agent", "upgrade DDD", "new DDD version available",

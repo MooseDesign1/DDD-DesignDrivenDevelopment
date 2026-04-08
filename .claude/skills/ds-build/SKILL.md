@@ -1,5 +1,6 @@
 ---
 name: ds-build
+model: sonnet-4-6
 description: >
   Full build pipeline for a component in Figma. Use when the user types /ds-build,
   asks to "build a component", "create the component", or is ready to construct a

@@ -1,5 +1,6 @@
 ---
 name: pd-write-memory
+model: haiku-4-5
 description: >
   Internal skill for persisting product design session changes to project memory files.
   Called as the final step of all pd-* user-facing skills. Updates only files that
@@ -16,13 +17,13 @@ Persist session changes to product design project memory files.
 
 Review the current session's actions. Identify which files need updating:
 
-- `design-system/projects/<slug>/screen-inventory.md` — if screens were added, designed, or annotated
-- `design-system/projects/<slug>/component-gaps.md` — if gaps were logged or resolved
-- `design-system/projects/<slug>/directions.md` — if a concept direction was locked
-- `design-system/projects/<slug>/flows.md` — if flows were defined or updated
-- `design-system/projects/<slug>/research.md` — if discovery content was written
-- `design-system/projects/<slug>/active_session.md` — always updated with current phase and checkpoint
-- `design-system/projects/PROJECTS.md` — if project phase changed
+- `projects/<slug>/design/screen-inventory.md` — if screens were added, designed, or annotated
+- `projects/<slug>/design/component-gaps.md` — if gaps were logged or resolved
+- `projects/<slug>/design/directions.md` — if a concept direction was locked
+- `projects/<slug>/design/flows.md` — if flows were defined or updated
+- `projects/<slug>/design/research.md` — if discovery content was written
+- `projects/<slug>/design/active_session.md` — always updated with current phase and checkpoint
+- `projects/PROJECTS.md` — if project phase changed
 
 ---
 

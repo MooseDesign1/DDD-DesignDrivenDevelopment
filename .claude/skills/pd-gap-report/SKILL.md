@@ -1,5 +1,6 @@
 ---
 name: pd-gap-report
+model: haiku-4-5
 description: >
   Internal skill for logging a missing design system component discovered during
   screen building. Called by pd-screen-builder when resolve-component returns
@@ -24,7 +25,7 @@ Log a missing component and coordinate resolution.
 
 ## Step 1 — Check if gap already logged
 
-Read `design-system/projects/<slug>/component-gaps.md`.
+Read `projects/<slug>/design/component-gaps.md`.
 If the component is already listed → update the `screens` column to include the new screen. Do not duplicate.
 
 ---

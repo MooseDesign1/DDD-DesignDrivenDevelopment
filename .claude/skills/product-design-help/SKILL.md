@@ -1,5 +1,6 @@
 ---
 name: product-design-help
+model: haiku-4-5
 description: >
   Explain the Product Designer Agent in depth. Triggered by /product-design-help,
   "how does the product designer work", "explain pd commands", "what is the product designer agent",
@@ -14,7 +15,7 @@ Explain the Product Designer Agent: what it does, the design phases, and when to
 ## Procedure
 
 ### Step 1 — Load state
-Read `design-system/projects/PROJECTS.md` (skip if missing) to check for active projects.
+Read `projects/PROJECTS.md` (skip if missing) to check for active projects.
 
 ### Step 2 — Present explanation
 
@@ -64,7 +65,7 @@ Each project moves through sequential phases. You can jump to any phase directly
 - Each phase ends with a checkpoint saved to `design-system/memory/active_session.md`.
 - Running `/product-designer` after a break detects the checkpoint and offers to resume.
 - If context gets too long (>60% usage), the agent warns you — `/clear` then `/product-designer` to resume safely.
-- All project files live in `design-system/projects/<project-slug>/`.
+- All project files live in `projects/<project-slug>/` (brief and handoff at root, design files in `design/`).
 
 ---
 
@@ -82,6 +83,6 @@ Each project moves through sequential phases. You can jump to any phase directly
 ```
 
 ## Rules
-- Fill in active projects from `design-system/projects/PROJECTS.md` if it exists
+- Fill in active projects from `projects/PROJECTS.md` if it exists
 - If the file is missing or empty, show the "No projects yet" message
 - Keep output scannable — tables as presented, no extra prose

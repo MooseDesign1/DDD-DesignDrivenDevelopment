@@ -1,5 +1,6 @@
 ---
 name: pd-annotate
+model: sonnet-4-6
 description: >
   Annotate designed screens with interaction logic, behavior notes, and edge cases.
   Use when the user types /pd:annotate, asks to "annotate the screens", "add annotations",
@@ -16,9 +17,9 @@ Add logic and behavior annotations to final designed screens. One annotation fra
 ## Step 1 — Load context
 
 Read:
-- `design-system/projects/<slug>/brief.md` — annotation preference (native or custom), if already set
-- `design-system/projects/<slug>/screen-inventory.md` — screens with status `designed`
-- `design-system/projects/<slug>/active_session.md`
+- `projects/<slug>/brief.md` — annotation preference (native or custom), if already set
+- `projects/<slug>/design/screen-inventory.md` — screens with status `designed`
+- `projects/<slug>/design/active_session.md`
 - `design-system/knowledge-base/components.md` — check if annotation component exists
 
 Update `active_session.md`:

@@ -1,5 +1,6 @@
 ---
 name: validate-component
+model: sonnet-4-6
 description: >
   Internal skill for post-build validation of a component. Called by ds-build after
   construction is complete. Checks naming, token compliance, structure, and conventions.

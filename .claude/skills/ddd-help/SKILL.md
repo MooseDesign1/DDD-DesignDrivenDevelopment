@@ -1,5 +1,6 @@
 ---
 name: ddd-help
+model: haiku-4-5
 description: >
   Explain the DDD (Design-Driven Development) framework as a whole. Triggered by /ddd-help,
   "what is DDD", "explain the framework", "what agents do I have", "how does this work",

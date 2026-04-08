@@ -1,5 +1,6 @@
 ---
 name: resolve-component
+model: sonnet-4-6
 description: >
   Internal skill for deciding whether to use an existing component, compose from
   existing components, or build new. Called by ds-plan and ds-build when a component

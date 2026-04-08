@@ -1,5 +1,6 @@
 ---
 name: ds-token
+model: haiku-4-5
 description: >
   Standalone token resolution — find the right token for a design intent. Use when
   the user types /ds-token, asks "which token should I use for...", "what token

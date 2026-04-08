@@ -1,5 +1,6 @@
 ---
 name: pd-handoff
+model: sonnet-4-6
 description: >
   Generate development handoff for a designed and annotated project. Use when the user
   types /pd:handoff, asks to "create handoff", "write the specs", "dev handoff",
@@ -16,12 +17,12 @@ Generate the development handoff: a Figma handoff page and a markdown spec docum
 ## Step 1 — Load context
 
 Read:
-- `design-system/projects/<slug>/brief.md`
-- `design-system/projects/<slug>/flows.md`
-- `design-system/projects/<slug>/screen-inventory.md`
-- `design-system/projects/<slug>/directions.md`
-- `design-system/projects/<slug>/component-gaps.md`
-- `design-system/projects/<slug>/active_session.md`
+- `projects/<slug>/brief.md`
+- `projects/<slug>/design/flows.md`
+- `projects/<slug>/design/screen-inventory.md`
+- `projects/<slug>/design/directions.md`
+- `projects/<slug>/design/component-gaps.md`
+- `projects/<slug>/design/active_session.md`
 - `design-system/knowledge-base/components.md`
 - `design-system/config.md`
 
@@ -67,7 +68,7 @@ Organize by flow: create a labeled section per flow on the handoff page.
 
 ## Step 3 — Generate markdown handoff document
 
-Write `design-system/projects/<slug>/handoff/<slug>-handoff.md`:
+Write `projects/<slug>/handoff/<slug>-handoff.md`:
 
 ```markdown
 # Development Handoff: <Project Name>
@@ -225,12 +226,12 @@ Update `active_session.md`:
 ```markdown
 ### Handoff
 status: complete
-handoff_doc: design-system/projects/<slug>/handoff/<slug>-handoff.md
+handoff_doc: projects/<slug>/handoff/<slug>-handoff.md
 figma_page: PDA — <Project Name> — Handoff
 screens_handed_off: <n>
 ```
 
-Update `design-system/projects/PROJECTS.md` — set project status to `handoff-complete`.
+Update `projects/PROJECTS.md` — set project status to `handoff-complete`.
 
 Invoke pd-write-memory.
 
@@ -242,7 +243,7 @@ Invoke pd-write-memory.
 ────────────────────────────────────────
 ✅  Handoff complete: <Project Name>
 
-📄  Spec doc:   design-system/projects/<slug>/handoff/<slug>-handoff.md
+📄  Spec doc:   projects/<slug>/handoff/<slug>-handoff.md
 🎨  Figma page: PDA — <Project Name> — Handoff
 
 <n> screens · <n> flows · <n> components documented
