@@ -16,9 +16,9 @@ Map user flows, information architecture, and build the screen inventory. The co
 ## Step 1 — Load context
 
 Read:
-- `design-system/projects/<slug>/brief.md`
-- `design-system/projects/<slug>/research.md` (if it exists)
-- `design-system/projects/<slug>/active_session.md`
+- `projects/<slug>/brief.md`
+- `projects/<slug>/design/research.md` (if it exists)
+- `projects/<slug>/design/active_session.md`
 
 If no active project → prompt to run `/pd:new-project`.
 
@@ -146,7 +146,7 @@ Save confirmed queue to `active_session.md`.
 
 ## Step 7 — Write flows.md and update screen-inventory.md
 
-**`design-system/projects/<slug>/flows.md`:**
+**`projects/<slug>/design/flows.md`:**
 ```markdown
 # Flows: <Project Name>
 

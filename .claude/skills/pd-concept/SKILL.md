@@ -17,10 +17,10 @@ Explore design directions: 3 written concepts per item → user picks one → lo
 ## Step 1 — Load context
 
 Read:
-- `design-system/projects/<slug>/brief.md`
-- `design-system/projects/<slug>/flows.md`
-- `design-system/projects/<slug>/directions.md`
-- `design-system/projects/<slug>/active_session.md` — check for concept queue and last completed item
+- `projects/<slug>/brief.md`
+- `projects/<slug>/design/flows.md`
+- `projects/<slug>/design/directions.md`
+- `projects/<slug>/design/active_session.md` — check for concept queue and last completed item
 - `design-system/knowledge-base/components.md` — available components for reference
 - `design-system/knowledge-base/tokens.md` — tokens for lo-fi reference
 
@@ -159,7 +159,7 @@ If "Lock" → proceed to 3g.
 
 ### 3g — Lock direction and log
 
-Update `design-system/projects/<slug>/directions.md`:
+Update `projects/<slug>/design/directions.md`:
 ```
 | <Item> | Concept 1: <name>, Concept 2: <name>, Concept 3: <name> | <Chosen concept name> | <One line rationale> | <date> |
 ```

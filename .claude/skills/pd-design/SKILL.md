@@ -16,12 +16,12 @@ Build final high-fidelity screens using the design system. The second diamond of
 ## Step 1 — Load context
 
 Read:
-- `design-system/projects/<slug>/brief.md`
-- `design-system/projects/<slug>/flows.md`
-- `design-system/projects/<slug>/directions.md` — locked directions per screen
-- `design-system/projects/<slug>/screen-inventory.md` — screens and their status
-- `design-system/projects/<slug>/component-gaps.md` — known gaps
-- `design-system/projects/<slug>/active_session.md`
+- `projects/<slug>/brief.md`
+- `projects/<slug>/design/flows.md`
+- `projects/<slug>/design/directions.md` — locked directions per screen
+- `projects/<slug>/design/screen-inventory.md` — screens and their status
+- `projects/<slug>/design/component-gaps.md` — known gaps
+- `projects/<slug>/design/active_session.md`
 - `design-system/knowledge-base/components.md`
 - `design-system/knowledge-base/tokens.md`
 - `design-system/knowledge-base/theming-conventions.md` (if exists)

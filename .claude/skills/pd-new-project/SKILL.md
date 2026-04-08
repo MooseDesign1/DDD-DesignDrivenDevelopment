@@ -15,7 +15,7 @@ Initialize a product design project: ingest or write a brief, create project mem
 
 ## Step 1 — Load context
 
-Read `design-system/projects/PROJECTS.md` if it exists. Note any existing projects.
+Read `projects/PROJECTS.md` if it exists. Note any existing projects.
 
 ---
 
@@ -101,7 +101,7 @@ Slugify the name: lowercase, hyphens, no spaces. E.g., `donor-portal`, `checkout
 
 Create the following files:
 
-**`design-system/projects/<slug>/brief.md`**
+**`projects/<slug>/brief.md`**
 ```markdown
 # Project Brief: <Project Name>
 
@@ -154,7 +154,7 @@ pending
 ---
 ```
 
-**`design-system/projects/<slug>/screen-inventory.md`**
+**`projects/<slug>/design/screen-inventory.md`**
 ```markdown
 # Screen Inventory: <Project Name>
 
@@ -164,7 +164,7 @@ pending
 |--------|------|----------|--------|------------|-------|
 ```
 
-**`design-system/projects/<slug>/component-gaps.md`**
+**`projects/<slug>/design/component-gaps.md`**
 ```markdown
 # Component Gaps: <Project Name>
 
@@ -175,7 +175,7 @@ pending
 |-----------|--------|-------------------|--------|------|
 ```
 
-**`design-system/projects/<slug>/directions.md`**
+**`projects/<slug>/design/directions.md`**
 ```markdown
 # Directions: <Project Name>
 
@@ -185,7 +185,7 @@ pending
 |------|-------------------|------------------|-----------|------|
 ```
 
-**`design-system/projects/<slug>/active_session.md`**
+**`projects/<slug>/design/active_session.md`**
 ```markdown
 # Active Session
 
@@ -203,7 +203,7 @@ status: complete
 brief_source: <"written in session" | list of document URLs>
 ```
 
-Update `design-system/projects/PROJECTS.md`:
+Update `projects/PROJECTS.md`:
 - Add row: `| <Project Name> | <slug> | DISCOVER | in_progress | <date> |`
 
 ---
@@ -214,7 +214,7 @@ Update `design-system/projects/PROJECTS.md`:
 ────────────────────────────────────────
 ✅  Project initialized: <Project Name>
 
-Brief saved to design-system/projects/<slug>/brief.md
+Brief saved to projects/<slug>/brief.md
 
 ────────────────────────────────────────
 ```
