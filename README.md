@@ -78,7 +78,7 @@ You never have to know which command to run. Just describe what you want.
 
 ```bash
 cd /your-project
-npx design-driven-development
+npx design-driven-development@latest
 ```
 
 No clone required. The package downloads, installs into your project, and is discarded.
