@@ -51,7 +51,7 @@ fi
 
 # --- Step 2: Copy skills (always overwrite to pick up updates) ---
 mkdir -p "$SKILLS_DIR"
-for skill_dir in "$SCRIPT_DIR/skills"/ds-* "$SCRIPT_DIR/skills"/ddd-* "$SCRIPT_DIR/skills"/pd-* "$SCRIPT_DIR/skills"/product-designer "$SCRIPT_DIR/skills"/build-frame "$SCRIPT_DIR/skills"/resolve-token "$SCRIPT_DIR/skills"/resolve-component "$SCRIPT_DIR/skills"/validate-component "$SCRIPT_DIR/skills"/write-memory "$SCRIPT_DIR/skills"/ddd-help "$SCRIPT_DIR/skills"/design-system-help "$SCRIPT_DIR/skills"/product-design-help; do
+for skill_dir in "$SCRIPT_DIR/skills"/*/; do
   skill_name="$(basename "$skill_dir")"
   target="$SKILLS_DIR/$skill_name"
   rm -rf "$target"
@@ -95,12 +95,56 @@ if (!alreadyInstalled) {
 }
 "
 
-# --- Step 3: Append CLAUDE.md section ---
-MARKER="# --- Design System Agent (DDD) ---"
-if [ -f "$CLAUDE_MD" ] && grep -qF "$MARKER" "$CLAUDE_MD"; then
-  echo "  CLAUDE.md already has DDD section — skipping"
+# --- Step 3: Append CLAUDE.md sections ---
+# Each section is injected independently so updates can add new sections without re-injecting old ones.
+
+inject_section() {
+  local marker="$1"
+  local section_file="$2"
+  if [ -f "$CLAUDE_MD" ] && grep -qF "$marker" "$CLAUDE_MD"; then
+    echo "  CLAUDE.md already has '${marker}' — skipping"
+  else
+    echo "  Injecting '${marker}' into CLAUDE.md..."
+    [ -f "$CLAUDE_MD" ] && echo "" >> "$CLAUDE_MD"
+    grep -A 10000 "$marker" "$section_file" | head -n "$(grep -n "$marker" "$section_file" | head -1 | cut -d: -f1 | xargs -I{} sh -c 'echo $(grep -c "" "$section_file") - {} + 1 | bc')" >> "$CLAUDE_MD" 2>/dev/null || cat "$section_file" >> "$CLAUDE_MD"
+  fi
+}
+
+# Simpler approach: inject by checking for each marker independently
+for marker in "# --- Natural Language Router ---" "# --- Design System Agent (DDD) ---" "# --- Planner Agent ---" "# --- Executor Agent ---"; do
+  if [ -f "$CLAUDE_MD" ] && grep -qF "$marker" "$CLAUDE_MD"; then
+    echo "  CLAUDE.md already has '${marker}' — skipping"
+  else
+    echo "  CLAUDE.md missing '${marker}'"
+  fi
+done
+
+# Append the full template if none of the core markers exist yet (fresh install)
+DS_MARKER="# --- Design System Agent (DDD) ---"
+if [ -f "$CLAUDE_MD" ] && grep -qF "$DS_MARKER" "$CLAUDE_MD"; then
+  # Existing install — inject only missing sections
+  ROUTER_MARKER="# --- Natural Language Router ---"
+  PLANNER_MARKER="# --- Planner Agent ---"
+  EXECUTOR_MARKER="# --- Executor Agent ---"
+
+  if ! grep -qF "$ROUTER_MARKER" "$CLAUDE_MD"; then
+    echo "" >> "$CLAUDE_MD"
+    sed -n "/^# --- Natural Language Router ---/,/^# --- Design System Agent/{ /^# --- Design System Agent/!p }" "$SCRIPT_DIR/templates/claude-md-section.md" >> "$CLAUDE_MD"
+    echo "  Injected Natural Language Router section"
+  fi
+  if ! grep -qF "$PLANNER_MARKER" "$CLAUDE_MD"; then
+    echo "" >> "$CLAUDE_MD"
+    sed -n "/^# --- Planner Agent ---/,/^# --- End Planner Agent ---/{p}" "$SCRIPT_DIR/templates/claude-md-section.md" >> "$CLAUDE_MD"
+    echo "  Injected Planner Agent section"
+  fi
+  if ! grep -qF "$EXECUTOR_MARKER" "$CLAUDE_MD"; then
+    echo "" >> "$CLAUDE_MD"
+    sed -n "/^# --- Executor Agent ---/,/^# --- End Executor Agent ---/{p}" "$SCRIPT_DIR/templates/claude-md-section.md" >> "$CLAUDE_MD"
+    echo "  Injected Executor Agent section"
+  fi
 else
-  echo "  Appending design system section to CLAUDE.md..."
+  # Fresh install — append the whole template
+  echo "  Appending all DDD sections to CLAUDE.md..."
   [ -f "$CLAUDE_MD" ] && echo "" >> "$CLAUDE_MD"
   cat "$SCRIPT_DIR/templates/claude-md-section.md" >> "$CLAUDE_MD"
 fi
