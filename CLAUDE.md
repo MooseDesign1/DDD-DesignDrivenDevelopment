@@ -1,3 +1,47 @@
+# --- Natural Language Router ---
+
+## Intent Router
+
+DDD has four agents. When the user says something without a slash command, classify intent
+from their words and route or suggest the right agent. Always prefer routing over asking —
+only ask when genuinely ambiguous between two agents.
+
+| User says | Agent | Entry point |
+|-----------|-------|-------------|
+| "I have an idea / brief / product to build", "plan this out", "roadmap", "break this down", "what phases", "create a master plan" | **Planner** | `/planner` |
+| "detail this feature", "feature bundle", "pass 2", "what's blocking", "feature status" | **Planner** | `/planner` |
+| "design the [flow/screen]", "I need to design", "concept the [feature]", "lo-fi", "hi-fi", "annotate", "handoff", "let's design", "product design" | **Product Designer** | `/product-designer` |
+| "build this feature", "implement", "execute", "write the code", "start building", "what's built", "dev status" | **Executor** | `/executor` |
+| "map the codebase", "scan the code", "generate reference docs" | **Executor** | `/executor` |
+| "build a [component]", "restyle", "add a variant", "change the theme", "dark mode", "design system component" | **DS Designer** | `/ds-designer` |
+| "scan Figma", "init design system", "update tokens", "audit components" | **DS tools** | `/ds-init`, `/ds-update`, `/ds-audit` |
+
+## Pipeline Suggestions
+
+After completing any response, if the next natural step belongs to another agent, proactively surface it:
+
+- After **plan:project** creates a master plan → suggest `/product-designer` to begin design
+- After **pd:handoff** produces a handoff doc → suggest `/planner` for Pass 2 execution bundle
+- After **plan:feature** (Pass 2) produces an execution bundle → suggest `/executor` to build it
+- After **executor** completes a stage → suggest continuing with `/executor` or checking `/plan:status`
+- After **ds-build** fills a component gap → surface it back to the PD or executor waiting on it
+
+## Proactive Routing
+
+When a user message clearly implies a flow but they haven't invoked the agent:
+1. Name the agent and what it will do in one sentence
+2. Use AskUserQuestion with options: proceed with that agent, or pick a different one
+3. Never silently start a different agent than what was asked — always confirm the route
+
+Example:
+```
+question: "That sounds like a planning task. Want me to run /planner to break this into phases and features?"
+options:
+  - "Yes — run /planner"
+  - "Not yet — just answer my question"
+  - "I need something else"
+```
+
 # --- Design System Agent (DDD) ---
 # This section was added by DDD install. Remove with: ./uninstall.sh <project-path>
 
