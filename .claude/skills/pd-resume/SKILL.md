@@ -1,5 +1,6 @@
 ---
 name: pd-resume
+model: sonnet-4-6
 description: >
   Resume an in-progress product design project after a context reset. Use when the user
   types /pd:resume, says "resume", "continue the project", "pick up where we left off",

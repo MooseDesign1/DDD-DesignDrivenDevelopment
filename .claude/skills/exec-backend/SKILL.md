@@ -1,6 +1,6 @@
 ---
 name: exec-backend
-model: opus-4-6
+model: sonnet-4-6
 effort: medium
 description: >
   Internal backend engineering agent for the executor. Writes backend code for one

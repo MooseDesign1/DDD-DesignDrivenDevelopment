@@ -1,5 +1,6 @@
 ---
 name: pd-discover
+model: sonnet-4-6
 description: >
   Discovery phase of product design. Use when the user types /pd:discover,
   asks to "research", "ideate", "understand the problem", "explore user needs",

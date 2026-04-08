@@ -1,6 +1,6 @@
 ---
 name: plan-write-memory
-model: opus-4-6
+model: haiku-4-5
 effort: medium
 description: >
   Internal skill for persisting planner session changes to project plan files.

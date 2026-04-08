@@ -1,5 +1,6 @@
 ---
 name: design-system-help
+model: haiku-4-5
 description: >
   Explain the Design System Agent in depth. Triggered by /design-system-help,
   "how does the design system agent work", "explain ds commands", "what is the design system agent",

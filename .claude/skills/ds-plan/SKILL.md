@@ -1,5 +1,6 @@
 ---
 name: ds-plan
+model: opus-4-6
 description: >
   Interactive planning interview for a new component. Use when the user types /ds-plan,
   asks to "plan a component", "design a new component", "I need a new component", or

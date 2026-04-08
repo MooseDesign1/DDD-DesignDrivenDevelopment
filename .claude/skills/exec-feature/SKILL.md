@@ -1,6 +1,6 @@
 ---
 name: exec-feature
-model: opus-4-6
+model: sonnet-4-6
 effort: medium
 description: >
   Core executor orchestrator. Builds a feature from its execution bundle stage by stage:
@@ -169,18 +169,23 @@ options:
 
 If user wants to review → present flags, let them decide.
 
-### 2b — Task execution loop
+### 2b — Task execution loop (wave-parallel)
 
-For each task in the architect's execution order:
+Process the architect's waves in order. Within each wave:
 
-1. Invoke exec-backend with:
-   - The task block
-   - The architect context for this task
-   - Project and feature slugs
+**Single-task wave** → invoke exec-backend with:
+- The task block
+- The architect context for this task
+- Project and feature slugs
 
-2. Receive the task result (files written, commit hash, AC status).
+**Multi-task wave** → invoke exec-backend simultaneously for all tasks in the wave.
+Each runs as an independent subagent with its own context window.
+Spawn all tasks in the wave in the same response — do not wait for one before starting others.
+Collect all results before moving to the next wave.
 
-3. Update active_session.md checkpoint via exec-write-memory.
+After each wave (all tasks in that wave complete):
+1. Receive task results (files written, commit hash, AC status)
+2. Update active_session.md checkpoint via exec-write-memory
 
 ### 2c — Stage verification
 
@@ -241,19 +246,24 @@ Invoke exec-architect with:
 - Stage: `frontend`
 - All frontend tasks
 
-### 3b — Task execution loop
+### 3b — Task execution loop (wave-parallel)
 
-For each task in the architect's execution order:
+Process the architect's waves in order. Within each wave:
 
-1. Invoke exec-frontend with:
-   - The task block
-   - The architect context for this task
-   - The design context from the feature bundle
-   - Project and feature slugs
+**Single-task wave** → invoke exec-frontend with:
+- The task block
+- The architect context for this task
+- The design context from the feature bundle
+- Project and feature slugs
 
-2. Receive the task result.
+**Multi-task wave** → invoke exec-frontend simultaneously for all tasks in the wave.
+Each runs as an independent subagent with its own context window.
+Spawn all tasks in the wave in the same response — do not wait for one before starting others.
+Collect all results before moving to the next wave.
 
-3. Update active_session.md checkpoint.
+After each wave (all tasks in that wave complete):
+1. Receive task results
+2. Update active_session.md checkpoint via exec-write-memory
 
 ### 3c — Stage verification
 

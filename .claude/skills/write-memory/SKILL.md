@@ -1,5 +1,6 @@
 ---
 name: write-memory
+model: haiku-4-5
 description: >
   Internal skill for persisting changes to memory files at the end of every workflow.
   Called as the final step of all user-facing skills. Updates only files that changed

@@ -1,5 +1,6 @@
 ---
 name: product-designer
+model: opus-4-6
 description: >
   Main product design agent. Triggered by /product-designer, or natural language such as:
   "start a new project", "I have a brief", "let's design", "work on the [project/flow/screen]",

@@ -1,5 +1,6 @@
 ---
 name: pd-annotate
+model: sonnet-4-6
 description: >
   Annotate designed screens with interaction logic, behavior notes, and edge cases.
   Use when the user types /pd:annotate, asks to "annotate the screens", "add annotations",

@@ -1,5 +1,6 @@
 ---
 name: ds-designer
+model: opus-4-6
 description: >
   Main design agent for all component and theme work. Triggered by /ds-designer,
   or natural language such as: "work on [component]", "build a [component]",

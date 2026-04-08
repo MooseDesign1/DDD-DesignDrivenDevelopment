@@ -1,6 +1,6 @@
 ---
 name: plan-status
-model: opus-4-6
+model: haiku-4-5
 effort: medium
 description: >
   Show project plan status dashboard. Use when the user types /plan:status, asks

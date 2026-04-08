@@ -1,6 +1,6 @@
 ---
 name: executor
-model: opus-4-6
+model: sonnet-4-6
 effort: medium
 description: >
   Main executor agent. Triggered by /executor, or natural language such as:

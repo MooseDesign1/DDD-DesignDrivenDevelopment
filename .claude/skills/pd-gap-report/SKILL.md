@@ -1,5 +1,6 @@
 ---
 name: pd-gap-report
+model: haiku-4-5
 description: >
   Internal skill for logging a missing design system component discovered during
   screen building. Called by pd-screen-builder when resolve-component returns

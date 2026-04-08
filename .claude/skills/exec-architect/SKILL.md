@@ -77,18 +77,31 @@ Example: "Use Supabase auth instead of custom JWT — matches existing auth patt
 
 ---
 
-## Step 3 — Determine task order within stage
+## Step 3 — Group tasks into execution waves
 
-Based on dependencies, sequence the tasks:
+Based on dependencies, group tasks into waves. Tasks in the same wave are independent
+and can run in parallel. Tasks in later waves depend on output from earlier waves.
 
 ```markdown
-## Execution Order
+## Execution Waves
 
-1. <Task A> — no deps, creates foundation
-2. <Task B> — depends on Task A (needs types it creates)
-3. <Task C> — depends on Task A (needs endpoint it creates)
-   Note: Tasks B and C are independent of each other
+**Wave 1** — no dependencies, run in parallel:
+- <Task A> — creates auth types (foundation for all)
+- <Task B> — creates db migration (independent of types)
+
+**Wave 2** — depends on Wave 1, run in parallel within wave:
+- <Task C> — depends on Task A (needs LoginRequest type)
+- <Task D> — depends on Task B (needs new db column)
+
+**Wave 3** — depends on Wave 2:
+- <Task E> — depends on Task C and Task D
 ```
+
+Rules for wave grouping:
+- A task moves to Wave N+1 if it depends on any task in Wave N
+- Tasks with no dependencies are always Wave 1
+- Tasks in the same wave must share zero file-level conflicts (no two tasks write the same file)
+- If two tasks would write the same file, sequence them — do not parallelize
 
 ---
 

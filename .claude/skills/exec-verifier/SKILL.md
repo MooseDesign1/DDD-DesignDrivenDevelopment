@@ -1,6 +1,6 @@
 ---
 name: exec-verifier
-model: opus-4-6
+model: sonnet-4-6
 effort: medium
 description: >
   Internal quality gate agent for the executor. Runs after each execution stage to

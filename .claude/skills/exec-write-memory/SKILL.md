@@ -1,6 +1,6 @@
 ---
 name: exec-write-memory
-model: opus-4-6
+model: haiku-4-5
 effort: medium
 description: >
   Internal skill for persisting executor session changes to project dev files.

@@ -1,5 +1,6 @@
 ---
 name: ds-audit
+model: opus-4-6
 description: >
   System-wide compliance audit of the design system. Use when the user types /ds-audit,
   asks to "audit", "check compliance", "run a health check", or wants a review of
