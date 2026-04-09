@@ -1,6 +1,7 @@
 ---
 name: ds-add-variant
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Add a variant or state to an existing component. Use when the user types
   /ds-add-variant, asks to "add a variant", "add a state", "extend a component",

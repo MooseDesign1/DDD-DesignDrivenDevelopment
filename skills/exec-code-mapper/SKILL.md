@@ -1,7 +1,7 @@
 ---
 name: exec-code-mapper
-model: opus-4-6
-effort: medium
+model: opus
+effort: high
 description: >
   Standalone codebase mapping agent. Scans an existing project codebase and produces
   structured reference docs (architecture.md, api-map.md, component-map.md, db-schema.md)

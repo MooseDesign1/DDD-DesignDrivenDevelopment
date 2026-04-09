@@ -1,6 +1,7 @@
 ---
 name: ds-verify
-model: haiku-4-5
+model: haiku
+effort: low
 description: >
   Screenshot-based visual verification of a component in Figma. Use when the user types
   /ds-verify, asks to "check how it looks", "verify the component", "take a screenshot",

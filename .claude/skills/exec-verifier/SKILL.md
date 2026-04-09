@@ -1,6 +1,6 @@
 ---
 name: exec-verifier
-model: sonnet-4-6
+model: sonnet
 effort: medium
 description: >
   Internal quality gate agent for the executor. Runs after each execution stage to

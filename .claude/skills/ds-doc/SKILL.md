@@ -1,6 +1,7 @@
 ---
 name: ds-doc
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Generate Figma-based documentation for a component. Use when the user types /ds-doc,
   asks to "document a component", "add docs", "create documentation", or wants to create

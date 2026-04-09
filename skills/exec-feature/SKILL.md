@@ -1,6 +1,6 @@
 ---
 name: exec-feature
-model: sonnet-4-6
+model: sonnet
 effort: medium
 description: >
   Core executor orchestrator. Builds a feature from its execution bundle stage by stage:

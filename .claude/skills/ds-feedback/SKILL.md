@@ -1,6 +1,7 @@
 ---
 name: ds-feedback
-model: haiku-4-5
+model: haiku
+effort: low
 description: >
   Capture workflow preferences and corrections outside of a build session. Use when
   the user types /ds-feedback, wants to adjust how a skill behaves, or provides

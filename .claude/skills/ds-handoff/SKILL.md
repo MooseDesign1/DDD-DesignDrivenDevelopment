@@ -1,6 +1,7 @@
 ---
 name: ds-handoff
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Create tickets in the configured tracker for component handoff to engineering.
   Use when the user types /ds-handoff, asks to "create tickets", "hand off components",

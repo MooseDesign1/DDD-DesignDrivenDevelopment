@@ -1,7 +1,7 @@
 ---
 name: plan-feature
-model: opus-4-6
-effort: medium
+model: opus
+effort: high
 description: >
   Feature-level planner with two-pass design awareness. Use when the user types /plan:feature,
   says "plan this feature", "detail the login feature", "break down [feature]", or wants to

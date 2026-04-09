@@ -1,6 +1,7 @@
 ---
 name: ds-help
-model: haiku-4-5
+model: haiku
+effort: low
 description: >
   Show design system status and available commands. Use when the user types /ds-help,
   asks "what can you do", "show status", "what commands are available", or wants an

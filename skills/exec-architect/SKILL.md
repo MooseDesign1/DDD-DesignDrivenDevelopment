@@ -1,7 +1,7 @@
 ---
 name: exec-architect
-model: opus-4-6
-effort: medium
+model: opus
+effort: high
 description: >
   Internal architecture agent for the executor. Reads a feature bundle and reference
   docs, produces per-task architecture decisions: file paths, patterns to follow,

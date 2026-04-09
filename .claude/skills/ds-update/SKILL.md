@@ -1,6 +1,7 @@
 ---
 name: ds-update
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Re-scan the Figma file and refresh the knowledge-base with changes. Use when the user
   types /ds-update, asks to "sync", "refresh", "rescan", or when the Figma file has been

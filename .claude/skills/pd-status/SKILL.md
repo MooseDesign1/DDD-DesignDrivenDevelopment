@@ -1,6 +1,7 @@
 ---
 name: pd-status
-model: haiku-4-5
+model: haiku
+effort: low
 description: >
   Show the current product design project status dashboard. Use when the user types
   /pd:status, asks "where are we", "what's done", "show me the project", "progress",

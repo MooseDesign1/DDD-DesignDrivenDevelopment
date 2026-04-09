@@ -1,7 +1,7 @@
 ---
 name: plan-project
-model: opus-4-6
-effort: medium
+model: opus
+effort: high
 description: >
   Master project planner. Use when the user types /plan:project, says "plan the project",
   "I have a brief", "break this down", "create a roadmap", or wants to initialize a project

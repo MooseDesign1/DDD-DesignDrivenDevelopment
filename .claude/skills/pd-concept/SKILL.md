@@ -1,6 +1,7 @@
 ---
 name: pd-concept
-model: opus-4-6
+model: opus
+effort: high
 description: >
   Concept phase of product design. Use when the user types /pd:concept,
   asks to "explore directions", "concept the screens", "ideate visually",

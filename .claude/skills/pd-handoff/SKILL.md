@@ -1,6 +1,7 @@
 ---
 name: pd-handoff
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Generate development handoff for a designed and annotated project. Use when the user
   types /pd:handoff, asks to "create handoff", "write the specs", "dev handoff",

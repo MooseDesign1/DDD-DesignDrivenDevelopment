@@ -1,6 +1,7 @@
 ---
 name: pd-define
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Define phase of product design. Use when the user types /pd:define,
   asks to "map flows", "define user flows", "create IA", "list screens",

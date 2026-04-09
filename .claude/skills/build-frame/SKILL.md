@@ -1,6 +1,7 @@
 ---
 name: build-frame
-model: haiku-4-5
+model: haiku
+effort: low
 description: >
   Internal skill for creating Figma frames with auto-layout, sizing, spacing, and padding.
   Called by ds-build and ds-add-variant. Handles frame creation, auto-layout setup, and

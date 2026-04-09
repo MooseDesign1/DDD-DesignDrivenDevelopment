@@ -1,6 +1,7 @@
 ---
 name: pd-write-memory
-model: haiku-4-5
+model: haiku
+effort: low
 description: >
   Internal skill for persisting product design session changes to project memory files.
   Called as the final step of all pd-* user-facing skills. Updates only files that

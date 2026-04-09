@@ -1,7 +1,7 @@
 ---
 name: exec-map
-model: opus-4-6
-effort: medium
+model: opus
+effort: high
 description: >
   Map an existing codebase into structured reference docs. Use when the user types
   /exec:map, says "map the codebase", "scan the project", "map the code",

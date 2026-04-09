@@ -1,6 +1,6 @@
 ---
 name: exec-resume
-model: sonnet-4-6
+model: sonnet
 effort: medium
 description: >
   Resume an in-progress feature build after a context reset. Use when the user types

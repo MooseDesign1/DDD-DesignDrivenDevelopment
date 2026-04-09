@@ -1,6 +1,6 @@
 ---
 name: exec-backend
-model: sonnet-4-6
+model: sonnet
 effort: medium
 description: >
   Internal backend engineering agent for the executor. Writes backend code for one

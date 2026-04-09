@@ -1,7 +1,7 @@
 ---
 name: plan-resume
-model: opus-4-6
-effort: medium
+model: opus
+effort: high
 description: >
   Resume a planning session after context reset. Use when the user types /plan:resume,
   says "resume planning", "continue the plan", "pick up where I left off on planning",

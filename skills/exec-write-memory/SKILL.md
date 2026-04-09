@@ -1,7 +1,7 @@
 ---
 name: exec-write-memory
-model: haiku-4-5
-effort: medium
+model: haiku
+effort: low
 description: >
   Internal skill for persisting executor session changes to project dev files.
   Called as the final step of all exec-* user-facing skills. Updates only files that

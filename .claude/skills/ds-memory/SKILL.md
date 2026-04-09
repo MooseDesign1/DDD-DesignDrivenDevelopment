@@ -1,6 +1,7 @@
 ---
 name: ds-memory
-model: haiku-4-5
+model: haiku
+effort: low
 description: >
   Read, write, and search persistent memory files. Use when the user types /ds-memory,
   asks to "check memory", "what do you remember", "update memory", or wants to manage

@@ -1,6 +1,7 @@
 ---
 name: product-design-help
-model: haiku-4-5
+model: haiku
+effort: low
 description: >
   Explain the Product Designer Agent in depth. Triggered by /product-design-help,
   "how does the product designer work", "explain pd commands", "what is the product designer agent",

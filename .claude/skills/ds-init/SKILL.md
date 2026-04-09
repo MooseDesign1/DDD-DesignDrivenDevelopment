@@ -1,6 +1,7 @@
 ---
 name: ds-init
-model: opus-4-6
+model: opus
+effort: high
 description: >
   Bootstrap scan of a Figma file. Auto-triggered when knowledge-base/components.md is empty
   (detected by CLAUDE.md boot check). Also use when the user types /ds-init, asks to

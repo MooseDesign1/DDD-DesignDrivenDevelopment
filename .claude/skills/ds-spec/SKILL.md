@@ -1,6 +1,7 @@
 ---
 name: ds-spec
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Generate an engineering implementation spec for a component. Use when the user types
   /ds-spec, asks for a "spec", "implementation guide", "engineering handoff", or needs

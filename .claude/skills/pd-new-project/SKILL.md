@@ -1,6 +1,7 @@
 ---
 name: pd-new-project
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Start a new product design project. Use when the user types /pd:new-project,
   says "start a new project", "I have a brief", "I want to design [product]",

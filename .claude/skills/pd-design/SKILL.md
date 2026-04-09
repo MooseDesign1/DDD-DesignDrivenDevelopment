@@ -1,6 +1,7 @@
 ---
 name: pd-design
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Design phase — build final hi-fi screens. Use when the user types /pd:design,
   asks to "design the screens", "build the final screens", "hi-fi", "finalize",

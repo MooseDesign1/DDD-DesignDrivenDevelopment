@@ -1,7 +1,7 @@
 ---
 name: plan-write-memory
-model: haiku-4-5
-effort: medium
+model: haiku
+effort: low
 description: >
   Internal skill for persisting planner session changes to project plan files.
   Called as the final step of all plan-* user-facing skills. Updates only files that

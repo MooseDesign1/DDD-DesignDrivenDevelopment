@@ -1,6 +1,6 @@
 ---
 name: exec-frontend
-model: sonnet-4-6
+model: sonnet
 effort: medium
 description: >
   Internal frontend engineering agent for the executor. Writes frontend code for one

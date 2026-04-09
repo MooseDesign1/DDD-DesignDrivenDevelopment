@@ -1,7 +1,7 @@
 ---
 name: planner
-model: opus-4-6
-effort: medium
+model: opus
+effort: high
 description: >
   Main planner agent. Triggered by /planner, or natural language such as:
   "plan the project", "I have a brief", "break this down", "create a roadmap",

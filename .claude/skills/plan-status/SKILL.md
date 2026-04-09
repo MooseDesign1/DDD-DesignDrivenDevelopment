@@ -1,7 +1,7 @@
 ---
 name: plan-status
-model: haiku-4-5
-effort: medium
+model: haiku
+effort: low
 description: >
   Show project plan status dashboard. Use when the user types /plan:status, asks
   "what's blocking", "what's ready", "show plan status", "where are we on the plan",

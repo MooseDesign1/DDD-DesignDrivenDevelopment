@@ -1,6 +1,7 @@
 ---
 name: pd-screen-builder
-model: sonnet-4-6
+model: sonnet
+effort: medium
 description: >
   Internal skill for building one hi-fi screen in Figma using the design system.
   Called by pd-design for each screen in the inventory. Handles component resolution,
