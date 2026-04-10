@@ -18,7 +18,7 @@ Restore planning context from checkpoint and continue from the last step.
 
 ## Step 1 — Load checkpoint
 
-Find active sessions: look for `projects/*/plan/active_session.md`.
+Find active sessions: look for `DDD/projects/*/plan/active_session.md`.
 
 If no `active_session.md` exists or all have `status: complete` → tell user:
 > "No in-progress planning session found. Use `/plan:status` to see your projects or `/plan:project` to start one."

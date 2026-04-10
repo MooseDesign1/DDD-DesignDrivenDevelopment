@@ -20,11 +20,11 @@ Orchestrate building a complete feature from its execution bundle.
 
 ## Step 1 — Load context and select feature
 
-Read `projects/PROJECTS.md`. Identify the active project.
+Read `DDD/projects/PROJECTS.md`. Identify the active project.
 
 If multiple active projects → use AskUserQuestion to pick one.
 
-Read `projects/<slug>/plan/master-plan.md`. List features with `status: ready-for-execution`.
+Read `DDD/projects/<slug>/plan/master-plan.md`. List features with `status: ready-for-execution`.
 
 If the user specified a feature → use it.
 If not → use AskUserQuestion:
@@ -36,7 +36,7 @@ options:
   - "<feature 3> — not yet ready (needs Pass 2)"
 ```
 
-Load the feature bundle from `projects/<slug>/plan/features/<feature-slug>.md`.
+Load the feature bundle from `DDD/projects/<slug>/plan/features/<feature-slug>.md`.
 Verify it has `status: ready-for-execution`. If not → tell user to run `/plan:feature` first.
 
 ---
@@ -74,7 +74,7 @@ Invoke exec-code-mapper. After completion, return to this step and re-ask
 
 ## Step 3 — Reference docs check
 
-Check if `projects/<slug>/dev/architecture.md` exists.
+Check if `DDD/projects/<slug>/dev/architecture.md` exists.
 
 - **Exists** → read it, confirm it's reasonably current
 - **Missing** → invoke exec-code-mapper to generate reference docs before proceeding

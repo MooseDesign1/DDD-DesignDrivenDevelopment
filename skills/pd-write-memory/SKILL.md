@@ -16,13 +16,13 @@ Persist session changes to product design project memory files.
 
 Review the current session's actions. Identify which files need updating:
 
-- `projects/<slug>/screen-inventory.md` — if screens were added, designed, or annotated
-- `projects/<slug>/component-gaps.md` — if gaps were logged or resolved
-- `projects/<slug>/directions.md` — if a concept direction was locked
-- `projects/<slug>/flows.md` — if flows were defined or updated
-- `projects/<slug>/research.md` — if discovery content was written
-- `projects/<slug>/active_session.md` — always updated with current phase and checkpoint
-- `projects/PROJECTS.md` — if project phase changed
+- `DDD/projects/<slug>/screen-inventory.md` — if screens were added, designed, or annotated
+- `DDD/projects/<slug>/component-gaps.md` — if gaps were logged or resolved
+- `DDD/projects/<slug>/directions.md` — if a concept direction was locked
+- `DDD/projects/<slug>/flows.md` — if flows were defined or updated
+- `DDD/projects/<slug>/research.md` — if discovery content was written
+- `DDD/projects/<slug>/active_session.md` — always updated with current phase and checkpoint
+- `DDD/projects/PROJECTS.md` — if project phase changed
 
 ---
 

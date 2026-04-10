@@ -20,7 +20,7 @@ Produce architecture decisions for a set of tasks within a feature execution sta
 
 ## Inputs (passed from exec-feature)
 
-- `feature_bundle` — the full feature plan from `projects/<slug>/plan/features/<feature>.md`
+- `feature_bundle` — the full feature plan from `DDD/projects/<slug>/plan/features/<feature>.md`
 - `stage` — which stage: `backend` or `frontend`
 - `tasks` — the list of tasks for this stage from the bundle
 
@@ -28,7 +28,7 @@ Produce architecture decisions for a set of tasks within a feature execution sta
 
 ## Step 1 — Load reference docs
 
-Read all available reference docs from `projects/<slug>/dev/`:
+Read all available reference docs from `DDD/projects/<slug>/dev/`:
 - `architecture.md` — stack, conventions, patterns
 - `api-map.md` — existing API routes
 - `component-map.md` — existing frontend components
@@ -118,9 +118,21 @@ If any task has:
 
 | Task | Flag | Impact |
 |------|------|--------|
-| <task> | Schema change | Requires migration — will update db-schema.md |
+| <task> | Schema change | Requires migration — will update db-schema.md + docs/DATABASE.md |
+| <task> | New API route | Will update docs/TECHNICAL_DOCUMENTATION.md |
+| <task> | Auth change | Will update docs/AUTHENTICATION.md |
 | <task> | No precedent | No existing pattern for WebSocket handlers — needs architect decision |
 ```
+
+For each task block, add a **Docs Impact** line listing which docs exec-backend must update:
+
+```markdown
+#### Docs Impact
+- `DDD/projects/<slug>/docs/DATABASE.md` — new trades table
+- `DDD/projects/<slug>/docs/TECHNICAL_DOCUMENTATION.md` — POST /api/trades route
+```
+
+Omit the Docs Impact section if a task has no documentation side effects.
 
 ---
 
@@ -140,3 +152,4 @@ task block to exec-backend or exec-frontend for each task.
 - **One task = one atomic unit** — each task block must be independently executable
 - **Respect CLAUDE.md rules** — architecture decisions must align with project rules (auth patterns, type system, etc.)
 - **DB changes are explicit** — if a task requires a migration, say so in the files table and flags
+- **Docs impact is explicit** — tag every task with which project docs in `DDD/projects/<slug>/docs/` exec-backend must update

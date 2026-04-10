@@ -16,12 +16,12 @@ Generate the development handoff: a Figma handoff page and a markdown spec docum
 ## Step 1 — Load context
 
 Read:
-- `projects/<slug>/brief.md`
-- `projects/<slug>/flows.md`
-- `projects/<slug>/screen-inventory.md`
-- `projects/<slug>/directions.md`
-- `projects/<slug>/component-gaps.md`
-- `projects/<slug>/active_session.md`
+- `DDD/projects/<slug>/brief.md`
+- `DDD/projects/<slug>/flows.md`
+- `DDD/projects/<slug>/screen-inventory.md`
+- `DDD/projects/<slug>/directions.md`
+- `DDD/projects/<slug>/component-gaps.md`
+- `DDD/projects/<slug>/active_session.md`
 - `design-system/knowledge-base/components.md`
 - `design-system/config.md`
 
@@ -67,7 +67,7 @@ Organize by flow: create a labeled section per flow on the handoff page.
 
 ## Step 3 — Generate markdown handoff document
 
-Write `projects/<slug>/handoff/<slug>-handoff.md`:
+Write `DDD/projects/<slug>/handoff/<slug>-handoff.md`:
 
 ```markdown
 # Development Handoff: <Project Name>
@@ -225,12 +225,12 @@ Update `active_session.md`:
 ```markdown
 ### Handoff
 status: complete
-handoff_doc: projects/<slug>/handoff/<slug>-handoff.md
+handoff_doc: DDD/projects/<slug>/handoff/<slug>-handoff.md
 figma_page: PDA — <Project Name> — Handoff
 screens_handed_off: <n>
 ```
 
-Update `projects/PROJECTS.md` — set project status to `handoff-complete`.
+Update `DDD/projects/PROJECTS.md` — set project status to `handoff-complete`.
 
 Invoke pd-write-memory.
 
@@ -242,7 +242,7 @@ Invoke pd-write-memory.
 ────────────────────────────────────────
 ✅  Handoff complete: <Project Name>
 
-📄  Spec doc:   projects/<slug>/handoff/<slug>-handoff.md
+📄  Spec doc:   DDD/projects/<slug>/handoff/<slug>-handoff.md
 🎨  Figma page: PDA — <Project Name> — Handoff
 
 <n> screens · <n> flows · <n> components documented

@@ -10,7 +10,7 @@ description: >
 
 # Exec Write Memory
 
-Persist session changes to `projects/<slug>/dev/` files.
+Persist session changes to `DDD/projects/<slug>/dev/` files.
 
 ---
 
@@ -18,9 +18,9 @@ Persist session changes to `projects/<slug>/dev/` files.
 
 Review the current session's actions. Identify which files need updating:
 
-- `projects/<slug>/dev/status.md` — if any feature stage progressed
-- `projects/<slug>/dev/active_session.md` — always updated with current skill and checkpoint
-- `projects/PROJECTS.md` — if project status changed (e.g., first feature started building)
+- `DDD/projects/<slug>/dev/status.md` — if any feature stage progressed
+- `DDD/projects/<slug>/dev/active_session.md` — always updated with current skill and checkpoint
+- `DDD/projects/PROJECTS.md` — if project status changed (e.g., first feature started building)
 
 ---
 
@@ -103,7 +103,7 @@ Tell the calling skill what was written:
 - Only touch files that actually changed — do not rewrite unchanged files
 - `active_session.md` is ALWAYS updated — it is the checkpoint
 - `status.md` is the gate signal — planner reads this for auto-detection
-- Never write to `projects/<slug>/plan/` — that's planner territory
-- Never write to `projects/<slug>/design/` or `handoff/` — that's PD territory
+- Never write to `DDD/projects/<slug>/plan/` — that's planner territory
+- Never write to `DDD/projects/<slug>/design/` or `handoff/` — that's PD territory
 - Never write to `design-system/` — that's DS territory
 - If `dev/` directory doesn't exist, create it

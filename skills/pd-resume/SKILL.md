@@ -14,7 +14,7 @@ Restore project context from memory and continue from the last checkpoint.
 
 ## Step 1 — Load checkpoint
 
-Read `projects/<slug>/active_session.md`.
+Read `DDD/projects/<slug>/active_session.md`.
 
 If no `active_session.md` exists or `status: complete` → tell user:
 > "No in-progress session found. Use `/pd:status` to see your projects or `/pd:new-project` to start one."

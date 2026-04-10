@@ -19,7 +19,7 @@ Scan a codebase and produce reference documentation for the executor sub-agents.
 
 ## Step 1 — Identify project
 
-Read `projects/PROJECTS.md` if it exists.
+Read `DDD/projects/PROJECTS.md` if it exists.
 
 If one active project → use it.
 If multiple → use AskUserQuestion to pick one.
@@ -33,13 +33,13 @@ options:
 ```
 
 If mapping without a project, use a temporary slug based on the directory name.
-Reference docs go to `projects/<slug>/dev/`.
+Reference docs go to `DDD/projects/<slug>/dev/`.
 
 ---
 
 ## Step 2 — Check for existing reference docs
 
-Check if `projects/<slug>/dev/architecture.md` exists.
+Check if `DDD/projects/<slug>/dev/architecture.md` exists.
 
 If exists → use AskUserQuestion:
 ```

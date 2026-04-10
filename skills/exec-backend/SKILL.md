@@ -100,6 +100,52 @@ After writing code, update the relevant reference docs inline:
 
 ---
 
+## Step 5b — Update project documentation
+
+After writing code, update the project's documentation in `DDD/projects/<slug>/docs/`.
+Create the `docs/` directory if it doesn't exist.
+
+**Trigger rules — only update docs that match what changed:**
+
+| What changed | Doc to update |
+|---|---|
+| New or modified API routes | `docs/TECHNICAL_DOCUMENTATION.md` |
+| New tables, columns, or migrations | `docs/DATABASE.md` |
+| Auth flow added or modified | `docs/AUTHENTICATION.md` |
+| System architecture or patterns changed | `docs/ARCHITECTURE.md` |
+
+**Format for each update:**
+```markdown
+## [Section]
+
+**Changed:** <date>
+**Change Type:** Addition | Modification | Deprecation
+**Reason:** <why this change was made>
+
+<Updated content — table or description>
+```
+
+**`docs/TECHNICAL_DOCUMENTATION.md`** — for new or modified API routes:
+- Add route under the relevant section (Auth, Setups, Trades, etc.)
+- Include method, path, auth required, request/response shapes, error codes
+- Note any validation rules or side effects
+
+**`docs/DATABASE.md`** — for schema changes:
+- Add or update table definition with columns, types, constraints
+- Include migration script reference
+- Add RLS policy descriptions
+- Update relationship diagram if tables were added
+
+**`docs/AUTHENTICATION.md`** — for auth changes:
+- Update auth flow steps if the flow changed
+- Add new token types, session handling, or middleware behavior
+
+**`docs/ARCHITECTURE.md`** — for pattern or design changes:
+- Update the relevant pattern section
+- Note why the existing pattern was extended or changed
+
+---
+
 ## Step 6 — Git commit
 
 Stage the files written in this task and commit:
@@ -133,6 +179,10 @@ Return a structured result:
 - api-map.md: added <n> routes
 - db-schema.md: added <n> tables
 
+**Project docs updated:**
+- docs/TECHNICAL_DOCUMENTATION.md: <added/updated sections or "no changes">
+- docs/DATABASE.md: <added/updated sections or "no changes">
+
 **Commit:** <commit hash — first 7 chars>
 
 **Acceptance criteria status:**
@@ -151,6 +201,7 @@ Return a structured result:
 - **Auth on every route** — if the project requires auth, every API route must validate it
 - **Validation before DB** — always validate inputs before database operations
 - **Update reference docs** — every new route goes in api-map.md, every schema change goes in db-schema.md
+- **Update project docs** — schema changes → docs/DATABASE.md, new routes → docs/TECHNICAL_DOCUMENTATION.md, auth changes → docs/AUTHENTICATION.md, all in `DDD/projects/<slug>/docs/`
 - **Commit per task** — atomic commits with clear messages
 - **Don't touch frontend** — if a task mentions UI, flag it and return to exec-feature
 - **Don't modify non-task files** — only touch files listed in the architect's file table, plus reference docs

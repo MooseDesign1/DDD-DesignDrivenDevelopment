@@ -22,8 +22,8 @@ Orchestrate building features from execution bundles using specialized sub-agent
 ## Step 1 — Load context and check for in-progress session
 
 Read these files (skip gracefully if missing):
-- `projects/PROJECTS.md` — all projects
-- Find any `projects/*/dev/active_session.md` — in-progress build
+- `DDD/projects/PROJECTS.md` — all projects
+- Find any `DDD/projects/*/dev/active_session.md` — in-progress build
 
 **If `active_session.md` exists and has `status: in_progress` and `agent: executor`:**
 
@@ -80,7 +80,7 @@ Invoke exec-resume. It handles checkpoint loading internally.
 
 ### → Status display (inline)
 
-Read `projects/<slug>/dev/status.md`. Present:
+Read `DDD/projects/<slug>/dev/status.md`. Present:
 
 ```
 --------------------------------------------
@@ -109,7 +109,7 @@ If no `status.md` exists:
 - Never assume which project to work on if multiple exist — ask
 - Surface the next action at the end of every interaction
 - Never write code directly — always delegate to sub-agents
-- Never modify `projects/<slug>/plan/` — that's planner territory
-- Never modify `projects/<slug>/design/` or `handoff/` — that's PD territory
+- Never modify `DDD/projects/<slug>/plan/` — that's planner territory
+- Never modify `DDD/projects/<slug>/design/` or `handoff/` — that's PD territory
 - Never modify `design-system/` — that's DS territory
 - Read `plan/` and `handoff/` and `design-system/knowledge-base/` for context — but never write to them

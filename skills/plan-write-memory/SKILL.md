@@ -18,10 +18,10 @@ Persist session changes to project plan files.
 
 Review the current session's actions. Identify which files need updating:
 
-- `projects/<slug>/plan/master-plan.md` — if phases, features, or gates were added/updated
-- `projects/<slug>/plan/features/<feature>.md` — if a feature was planned (Pass 1 or Pass 2)
-- `projects/<slug>/plan/active_session.md` — always updated with current skill and checkpoint
-- `projects/PROJECTS.md` — if project status or phase changed
+- `DDD/projects/<slug>/plan/master-plan.md` — if phases, features, or gates were added/updated
+- `DDD/projects/<slug>/plan/features/<feature>.md` — if a feature was planned (Pass 1 or Pass 2)
+- `DDD/projects/<slug>/plan/active_session.md` — always updated with current skill and checkpoint
+- `DDD/projects/PROJECTS.md` — if project status or phase changed
 
 ---
 
@@ -82,8 +82,8 @@ Tell the calling skill what was written:
 
 - Only touch files that actually changed — do not rewrite unchanged files
 - `active_session.md` is ALWAYS updated — it is the checkpoint
-- Never write to `projects/<slug>/design/` — that's PD territory
-- Never write to `projects/<slug>/handoff/` — that's PD output
-- Never write to `projects/<slug>/dev/` — that's executor territory
+- Never write to `DDD/projects/<slug>/design/` — that's PD territory
+- Never write to `DDD/projects/<slug>/handoff/` — that's PD output
+- Never write to `DDD/projects/<slug>/dev/` — that's executor territory
 - Never write to `design-system/` — that's DS territory
 - PROJECTS.md status is updated every session end

@@ -16,9 +16,9 @@ Add logic and behavior annotations to final designed screens. One annotation fra
 ## Step 1 — Load context
 
 Read:
-- `projects/<slug>/brief.md` — annotation preference (native or custom), if already set
-- `projects/<slug>/screen-inventory.md` — screens with status `designed`
-- `projects/<slug>/active_session.md`
+- `DDD/projects/<slug>/brief.md` — annotation preference (native or custom), if already set
+- `DDD/projects/<slug>/screen-inventory.md` — screens with status `designed`
+- `DDD/projects/<slug>/active_session.md`
 - `design-system/knowledge-base/components.md` — check if annotation component exists
 
 Update `active_session.md`:

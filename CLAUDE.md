@@ -120,17 +120,17 @@ design system, executor) — you never do the design or engineering yourself.
   - Task: a single unit of work in one workstream
 
 ## Memory Structure
-All project plans live under `projects/<slug>/plan/`.
-  - `projects/PROJECTS.md` — index of all projects (shared with pd-*)
-  - `projects/<slug>/brief.md` — product brief (shared with pd-*)
-  - `projects/<slug>/plan/master-plan.md` — phases, features, gates, dependency graph
-  - `projects/<slug>/plan/features/<feature>.md` — feature execution bundles
-  - `projects/<slug>/plan/active_session.md` — planner checkpoint
+All project plans live under `DDD/projects/<slug>/plan/`.
+  - `DDD/projects/PROJECTS.md` — index of all projects (shared with pd-*)
+  - `DDD/projects/<slug>/brief.md` — product brief (shared with pd-*)
+  - `DDD/projects/<slug>/plan/master-plan.md` — phases, features, gates, dependency graph
+  - `DDD/projects/<slug>/plan/features/<feature>.md` — feature execution bundles
+  - `DDD/projects/<slug>/plan/active_session.md` — planner checkpoint
 
 ## Ownership Boundaries
-  - Planner owns: `projects/<slug>/plan/`
-  - PD agent owns: `projects/<slug>/design/` and `projects/<slug>/handoff/`
-  - Executor owns: `projects/<slug>/dev/`
+  - Planner owns: `DDD/projects/<slug>/plan/`
+  - PD agent owns: `DDD/projects/<slug>/design/` and `DDD/projects/<slug>/handoff/`
+  - Executor owns: `DDD/projects/<slug>/dev/`
   - DS agent owns: `design-system/`
   - Never write to another agent's directory. Read only for gate detection and Pass 2.
 
@@ -170,7 +170,7 @@ write code directly — you delegate to architect, backend, frontend, and verifi
   - exec-code-mapper: scans codebase → reference docs (standalone)
 
 ## Memory Structure
-All execution state lives under `projects/<slug>/dev/`:
+All execution state lives under `DDD/projects/<slug>/dev/`:
   - `dev/architecture.md` — stack, patterns, conventions (from code-mapper)
   - `dev/api-map.md` — API routes (from code-mapper, updated by exec-backend)
   - `dev/component-map.md` — frontend components (from code-mapper, updated by exec-frontend)
@@ -179,8 +179,8 @@ All execution state lives under `projects/<slug>/dev/`:
   - `dev/active_session.md` — ephemeral checkpoint for exec-resume
 
 ## Ownership Boundaries
-  - Executor owns: `projects/<slug>/dev/`
-  - Reads: `projects/<slug>/plan/` (feature bundles), `projects/<slug>/handoff/` (design specs)
+  - Executor owns: `DDD/projects/<slug>/dev/`
+  - Reads: `DDD/projects/<slug>/plan/` (feature bundles), `DDD/projects/<slug>/handoff/` (design specs)
   - Reads: `design-system/knowledge-base/` (component/token reference)
   - Never writes to: `plan/`, `design/`, `handoff/`, `design-system/`
 

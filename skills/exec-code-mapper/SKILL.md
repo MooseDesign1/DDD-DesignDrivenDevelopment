@@ -5,7 +5,7 @@ effort: high
 description: >
   Standalone codebase mapping agent. Scans an existing project codebase and produces
   structured reference docs (architecture.md, api-map.md, component-map.md, db-schema.md)
-  under projects/<slug>/dev/. Called by exec-map (user-facing) or by exec-feature when
+  under DDD/projects/<slug>/dev/. Called by exec-map (user-facing) or by exec-feature when
   no reference docs exist. Can also be invoked standalone for any codebase scan.
   Never invoked directly by the user — use /exec:map instead.
 ---
@@ -20,7 +20,7 @@ Scan a project codebase and produce structured reference documentation for the e
 
 ## Step 1 — Identify project and codebase root
 
-Read `projects/PROJECTS.md` if it exists. Identify the active project.
+Read `DDD/projects/PROJECTS.md` if it exists. Identify the active project.
 
 If the project has a `brief.md`, read it for tech stack hints.
 
@@ -75,7 +75,7 @@ Map the top-level directory tree (2 levels deep). Identify:
 
 ## Step 4 — Produce architecture.md
 
-Write `projects/<slug>/dev/architecture.md`:
+Write `DDD/projects/<slug>/dev/architecture.md`:
 
 ```markdown
 # Architecture: <Project Name>
@@ -125,7 +125,7 @@ Write `projects/<slug>/dev/architecture.md`:
 
 Scan all API route files. For each route:
 
-Write `projects/<slug>/dev/api-map.md`:
+Write `DDD/projects/<slug>/dev/api-map.md`:
 
 ```markdown
 # API Map: <Project Name>
@@ -162,7 +162,7 @@ Write `projects/<slug>/dev/api-map.md`:
 
 Scan component directories. For each component:
 
-Write `projects/<slug>/dev/component-map.md`:
+Write `DDD/projects/<slug>/dev/component-map.md`:
 
 ```markdown
 # Component Map: <Project Name>
@@ -198,7 +198,7 @@ Write `projects/<slug>/dev/component-map.md`:
 
 Scan database schema files (migrations, Prisma schema, Supabase types, etc.):
 
-Write `projects/<slug>/dev/db-schema.md`:
+Write `DDD/projects/<slug>/dev/db-schema.md`:
 
 ```markdown
 # Database Schema: <Project Name>

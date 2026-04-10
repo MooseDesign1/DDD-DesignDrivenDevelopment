@@ -21,8 +21,8 @@ Independent orchestrator for end-to-end product development: from brief to phase
 ## Step 1 — Load context and check for in-progress session
 
 Read these files (skip gracefully if missing):
-- `projects/PROJECTS.md` — all projects and their current phase
-- Find any `projects/*/plan/active_session.md` — in-progress planning checkpoint
+- `DDD/projects/PROJECTS.md` — all projects and their current phase
+- Find any `DDD/projects/*/plan/active_session.md` — in-progress planning checkpoint
 
 **If `active_session.md` exists and has `status: in_progress` and `agent: planner`:**
 
@@ -78,8 +78,8 @@ options:
 - Always check for `active_session.md` before starting any new work
 - Never assume which project to work on if multiple exist — ask
 - Surface the delegation output at the end of every skill (what to do next and which agent)
-- All project plan memory lives under `projects/<project-slug>/plan/`
-- Never modify `projects/<slug>/design/` — that's PD territory
-- Never modify `projects/<slug>/handoff/` — that's PD output
+- All project plan memory lives under `DDD/projects/<project-slug>/plan/`
+- Never modify `DDD/projects/<slug>/design/` — that's PD territory
+- Never modify `DDD/projects/<slug>/handoff/` — that's PD output
 - Never modify `design-system/` — that's DS territory
 - Read `handoff/` and `design/component-gaps.md` for gate detection and Pass 2 — but never write to them

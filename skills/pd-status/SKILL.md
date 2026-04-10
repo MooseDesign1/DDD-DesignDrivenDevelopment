@@ -14,7 +14,7 @@ Show a full project overview: phase, screen inventory, gaps, and what's next.
 
 ## Step 1 — Identify active project
 
-Read `projects/PROJECTS.md`.
+Read `DDD/projects/PROJECTS.md`.
 
 If one project with `status: in_progress` → use it.
 If multiple in-progress projects → ask:
@@ -33,11 +33,11 @@ If no active project → show PROJECTS.md summary and suggest `/pd:new-project`.
 ## Step 2 — Load project files
 
 Read:
-- `projects/<slug>/brief.md`
-- `projects/<slug>/screen-inventory.md`
-- `projects/<slug>/component-gaps.md`
-- `projects/<slug>/active_session.md`
-- `projects/<slug>/directions.md`
+- `DDD/projects/<slug>/brief.md`
+- `DDD/projects/<slug>/screen-inventory.md`
+- `DDD/projects/<slug>/component-gaps.md`
+- `DDD/projects/<slug>/active_session.md`
+- `DDD/projects/<slug>/directions.md`
 
 ---
 
