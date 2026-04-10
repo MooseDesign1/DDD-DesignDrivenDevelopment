@@ -21,7 +21,7 @@ Read what was just produced and check whether it actually does the job. Fresh ey
 
 ## Inputs
 
-- `artifact_type` — `code` | `plan` | `bundle` | `handoff`
+- `artifact_type` — `code` | `plan` | `bundle` | `handoff` | `architecture`
 - `artifact_paths` — files to read
 - `criteria` — what it must satisfy (acceptance criteria, must-haves, brief, task description)
 - `context_paths` — supporting files for comparison (feature bundle, architecture.md, handoff, etc.)
@@ -66,6 +66,12 @@ For any artifact type, always ask:
 ### `handoff`
 - Does every screen have its states defined (default, error, empty)? A screen without states will block the developer.
 - Is there a component map? Without it, the executor can't run Stage 1 (DS gaps).
+
+### `architecture`
+- Does every task in the feature bundle have a corresponding architecture block? Any task without one will be built without guidance.
+- Do the execution waves respect the stated dependencies — is any task scheduled in a wave before its dependency completes?
+- Does every pattern reference cite a real existing file? A reference to a file that doesn't exist will mislead exec-backend or exec-frontend.
+- Does the data flow for each task match what the feature bundle actually requires? Flag any mismatch between what the bundle asks for and what the architect decided.
 
 ---
 

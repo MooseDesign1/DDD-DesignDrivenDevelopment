@@ -137,7 +137,20 @@ Omit the Docs Impact section if a task has no documentation side effects.
 
 ---
 
-## Step 5 — Return to exec-feature
+## Step 5 — Spawn task-verifier
+
+Before returning, spawn task-verifier as a subagent with:
+- `artifact_type`: `architecture`
+- `artifact_paths`: the architecture output just produced (inline — pass the full text)
+- `criteria`: the task list for this stage from the feature bundle
+- `context_paths`: `DDD/projects/<slug>/dev/architecture.md`, the feature bundle
+
+If BLOCK → fix the flagged issues in the architecture decisions before returning to exec-feature. Do not return a plan with known gaps.
+If WARN → include the warnings in the return output so exec-feature can surface them.
+
+---
+
+## Step 6 — Return to exec-feature
 
 Return the full architecture output as structured context. exec-feature passes the relevant
 task block to exec-backend or exec-frontend for each task.
@@ -154,3 +167,4 @@ task block to exec-backend or exec-frontend for each task.
 - **Respect CLAUDE.md rules** — architecture decisions must align with project rules (auth patterns, type system, etc.)
 - **DB changes are explicit** — if a task requires a migration, say so in the files table and flags
 - **Docs impact is explicit** — tag every task with which project docs in `DDD/projects/<slug>/docs/` exec-backend must update
+- **Self-verify before returning** — always spawn task-verifier on the architecture output; never return a plan with a BLOCK verdict
