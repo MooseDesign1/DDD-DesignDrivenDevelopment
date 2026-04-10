@@ -20,6 +20,8 @@ Review the current session's actions. Identify which files need updating:
 
 - `DDD/projects/<slug>/dev/status.md` — if any feature stage progressed
 - `DDD/projects/<slug>/dev/active_session.md` — always updated with current skill and checkpoint
+- `DDD/projects/<slug>/dev/architect-<feature-slug>-backend.md` — if exec-architect ran for backend stage (write full architect output)
+- `DDD/projects/<slug>/dev/architect-<feature-slug>-frontend.md` — if exec-architect ran for frontend stage (write full architect output)
 - `DDD/projects/PROJECTS.md` — if project status changed (e.g., first feature started building)
 
 ---
@@ -100,6 +102,7 @@ Tell the calling skill what was written:
 
 ## Rules
 
+- **Architect output must be persisted** — if exec-architect ran this session, always write `architect-<feature-slug>-<stage>.md` before returning
 - Only touch files that actually changed — do not rewrite unchanged files
 - `active_session.md` is ALWAYS updated — it is the checkpoint
 - `status.md` is the gate signal — planner reads this for auto-detection
