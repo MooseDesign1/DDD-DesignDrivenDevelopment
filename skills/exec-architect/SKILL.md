@@ -6,8 +6,9 @@ description: >
   Internal architecture agent for the executor. Reads a feature bundle and reference
   docs, produces per-task architecture decisions: file paths, patterns to follow,
   data flow, and dependencies. Called by exec-feature before each execution stage.
-  Output is passed in-context to exec-backend or exec-frontend — not persisted.
-  Never invoked directly by the user.
+  Output is written to DDD/projects/<slug>/dev/architect-<feature-slug>-<stage>.md
+  by exec-feature immediately after the run. On resume, exec-feature loads that file
+  instead of re-running this skill. Never invoked directly by the user.
 ---
 
 # Exec Architect

@@ -121,7 +121,31 @@ After writing code, update:
 
 ---
 
+## Step 6b — Update project documentation (MANDATORY — no exceptions)
+
+Write to `DDD/projects/<slug>/docs/` after every task. Create the directory and any
+missing doc files. Two docs are in scope for frontend tasks:
+
+**`docs/TECHNICAL_DOCUMENTATION.md`**
+- If this task added new pages or client-side routes → document path, component, auth required, description
+- If no new pages/routes → append: `<!-- <task-title>: no route changes -->`
+
+**`docs/ARCHITECTURE.md`**
+- If this task introduced a new frontend pattern, component structure, or state management approach → document it
+- If no new patterns → append: `<!-- <task-title>: no architecture changes -->`
+
+`docs/DATABASE.md` and `docs/AUTHENTICATION.md` are backend concerns — do not write to them from frontend tasks.
+
+**Do not skip this step.** Both docs must be written before the git commit.
+
+---
+
 ## Step 7 — Git commit
+
+**Before staging: verify Step 6b is complete.** Both doc files must have been written
+(updated or "no changes" comment). If either is missing, write them now before continuing.
+
+
 
 Stage the files written in this task and commit:
 
@@ -159,6 +183,10 @@ Return a structured result:
 **Reference docs updated:**
 - component-map.md: added <n> components
 
+**Project docs updated:**
+- docs/TECHNICAL_DOCUMENTATION.md: <what was added/updated, or "no changes — comment written">
+- docs/ARCHITECTURE.md: <what was added/updated, or "no changes — comment written">
+
 **Commit:** <commit hash>
 
 **States implemented:**
@@ -190,6 +218,7 @@ Return a structured result:
 - **Wire to real endpoints** — use api-map.md for exact route paths and response shapes
 - **Don't touch backend** — if a task mentions API changes, flag it and return to exec-feature
 - **Update component-map.md** — every new component must be registered
+- **Update project docs — always, no exceptions** — write docs/TECHNICAL_DOCUMENTATION.md and docs/ARCHITECTURE.md after every task; write a `<!-- no changes -->` comment for categories not touched; never skip this step
 - **Read before write** — always read existing files before modifying
 - **Accessibility** — use semantic HTML, ARIA labels where needed, keyboard navigation (via shadcn/ui)
 - **Responsive** — mobile-first, use Tailwind breakpoints (sm, md, lg, xl)
