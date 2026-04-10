@@ -110,6 +110,20 @@ For each component:
 
 ---
 
+## Step 5b — Spawn task-verifier
+
+After writing all code for this task, spawn task-verifier as a subagent with:
+- `artifact_type`: `code`
+- `artifact_paths`: all files written in Step 5
+- `criteria`: the task's acceptance criteria from the feature bundle
+- `context_paths`: the architect context block, `dev/architecture.md`, the design context section from the feature bundle
+
+**If BLOCK** → fix the flagged issues before proceeding to Step 6. Do not update docs or commit until the verifier passes.
+**If WARN** → note the warnings, continue. Surface them in the Step 8 return result.
+**If PASS** → continue.
+
+---
+
 ## Step 6 — Update reference docs
 
 After writing code, update:

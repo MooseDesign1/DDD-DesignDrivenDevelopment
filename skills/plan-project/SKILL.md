@@ -262,6 +262,19 @@ Write `DDD/projects/<slug>/plan/master-plan.md`:
 
 ---
 
+## Step 10b — Spawn task-verifier
+
+After writing master-plan.md, spawn task-verifier as a subagent with:
+- `artifact_type`: `plan`
+- `artifact_paths`: the master-plan.md just written
+- `criteria`: the feature list confirmed in Step 4 and must-haves from Step 9
+- `context_paths`: `DDD/projects/<slug>/brief.md`
+
+If BLOCK → fix the flagged gaps in the master plan before initializing project files.
+If WARN → surface warnings in the Step 13 output summary.
+
+---
+
 ## Step 11 — Initialize project files
 
 Create:

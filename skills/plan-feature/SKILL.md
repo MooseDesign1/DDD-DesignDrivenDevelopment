@@ -134,6 +134,16 @@ Wave 3: <tasks after design handoff — awaiting>
 
 Write `DDD/projects/<slug>/plan/features/<feature-slug>.md` with Pass 1 content.
 Update master-plan.md feature status.
+
+**Spawn task-verifier** with:
+- `artifact_type`: `bundle`
+- `artifact_paths`: the feature file just written
+- `criteria`: the feature description and must-haves from master-plan.md
+- `context_paths`: `DDD/projects/<slug>/brief.md`
+
+If BLOCK → fix the flagged gaps before invoking plan-write-memory or presenting to the user.
+If WARN → surface warnings in the output summary.
+
 Invoke plan-write-memory.
 
 Present:
@@ -284,6 +294,16 @@ Update the feature plan header:
 ```
 
 Update master-plan.md feature and gate status.
+
+**Spawn task-verifier** with:
+- `artifact_type`: `bundle`
+- `artifact_paths`: the feature file just written
+- `criteria`: the acceptance criteria and must-haves from the bundle itself
+- `context_paths`: the design handoff doc, `DDD/projects/<slug>/brief.md`
+
+If BLOCK → fix the flagged gaps before marking `ready-for-execution` or invoking plan-write-memory.
+If WARN → surface warnings in the output summary.
+
 Invoke plan-write-memory.
 
 Present:

@@ -199,11 +199,25 @@ Write `DDD/projects/<slug>/handoff/<slug>-handoff.md`:
 
 ---
 
+## Step 3b — Spawn task-verifier
+
+After writing the handoff markdown document, spawn task-verifier as a subagent with:
+- `artifact_type`: `handoff`
+- `artifact_paths`: `DDD/projects/<slug>/handoff/<slug>-handoff.md`
+- `criteria`: the annotated screens and must-haves from the design phase
+- `context_paths`: `DDD/projects/<slug>/design/` (concept and define docs), `DDD/projects/<slug>/brief.md`
+
+If BLOCK → fix the flagged gaps in the handoff doc before showing it to the user.
+If WARN → surface warnings in the Step 4 review so the user can decide whether to address them.
+
+---
+
 ## Step 4 — Review with user
 
 Present:
 - Screenshot of Figma handoff page
 - Summary of what was written to the markdown doc
+- Any task-verifier warnings (if WARN)
 
 Ask:
 ```
