@@ -20,11 +20,11 @@ Orchestrate building a complete feature from its execution bundle.
 
 ## Step 1 — Load context and select feature
 
-Read `projects/PROJECTS.md`. Identify the active project.
+Read `DDD/projects/PROJECTS.md`. Identify the active project.
 
 If multiple active projects → use AskUserQuestion to pick one.
 
-Read `projects/<slug>/plan/master-plan.md`. List features with `status: ready-for-execution`.
+Read `DDD/projects/<slug>/plan/master-plan.md`. List features with `status: ready-for-execution`.
 
 If the user specified a feature → use it.
 If not → use AskUserQuestion:
@@ -36,7 +36,7 @@ options:
   - "<feature 3> — not yet ready (needs Pass 2)"
 ```
 
-Load the feature bundle from `projects/<slug>/plan/features/<feature-slug>.md`.
+Load the feature bundle from `DDD/projects/<slug>/plan/features/<feature-slug>.md`.
 Verify it has `status: ready-for-execution`. If not → tell user to run `/plan:feature` first.
 
 ---
@@ -74,7 +74,7 @@ Invoke exec-code-mapper. After completion, return to this step and re-ask
 
 ## Step 3 — Reference docs check
 
-Check if `projects/<slug>/dev/architecture.md` exists.
+Check if `DDD/projects/<slug>/dev/architecture.md` exists.
 
 - **Exists** → read it, confirm it's reasonably current
 - **Missing** → invoke exec-code-mapper to generate reference docs before proceeding
@@ -152,12 +152,21 @@ Extract all backend tasks from the feature bundle (including any backend revisio
 
 ### 2a — Architecture planning
 
-Invoke exec-architect with:
-- The feature bundle
-- Stage: `backend`
-- All backend tasks
+**First — check for saved architect output.**
+Look for `DDD/projects/<slug>/dev/architect-<feature-slug>-backend.md`.
 
-Review the architect's output. If flags exist (schema changes, no precedent, ambiguity):
+- **File exists** → read it and use it as the architect context. Do NOT re-run exec-architect.
+  Show: "Loading saved architect plan for backend stage."
+- **File missing** → invoke exec-architect with:
+  - The feature bundle
+  - Stage: `backend`
+  - All backend tasks
+
+  After exec-architect returns, immediately write its full output to
+  `DDD/projects/<slug>/dev/architect-<feature-slug>-backend.md` before proceeding.
+  This file is the resume checkpoint for the architect stage.
+
+Review the architect's output (loaded or fresh). If flags exist (schema changes, no precedent, ambiguity):
 
 Use AskUserQuestion:
 ```
@@ -241,10 +250,18 @@ Extract all frontend tasks from the feature bundle.
 
 ### 3a — Architecture planning
 
-Invoke exec-architect with:
-- The feature bundle (including design context section)
-- Stage: `frontend`
-- All frontend tasks
+**First — check for saved architect output.**
+Look for `DDD/projects/<slug>/dev/architect-<feature-slug>-frontend.md`.
+
+- **File exists** → read it and use it as the architect context. Do NOT re-run exec-architect.
+  Show: "Loading saved architect plan for frontend stage."
+- **File missing** → invoke exec-architect with:
+  - The feature bundle (including design context section)
+  - Stage: `frontend`
+  - All frontend tasks
+
+  After exec-architect returns, immediately write its full output to
+  `DDD/projects/<slug>/dev/architect-<feature-slug>-frontend.md` before proceeding.
 
 ### 3b — Task execution loop (wave-parallel)
 

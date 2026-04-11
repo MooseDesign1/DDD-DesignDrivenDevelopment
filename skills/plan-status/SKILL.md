@@ -18,7 +18,7 @@ Show a full project plan overview: phase progress, gate status, blockers, and wh
 
 ## Step 1 — Identify active project
 
-Read `projects/PROJECTS.md`.
+Read `DDD/projects/PROJECTS.md`.
 
 If one project with `status: active` → use it.
 If multiple active projects → ask:
@@ -37,10 +37,10 @@ If no active project → show PROJECTS.md and suggest `/plan:project`.
 ## Step 2 — Load project files
 
 Read:
-- `projects/<slug>/plan/master-plan.md`
-- All `projects/<slug>/plan/features/*.md`
-- `projects/<slug>/design/component-gaps.md` (if exists)
-- `projects/<slug>/dev/status.md` (if exists)
+- `DDD/projects/<slug>/plan/master-plan.md`
+- All `DDD/projects/<slug>/plan/features/*.md`
+- `DDD/projects/<slug>/design/component-gaps.md` (if exists)
+- `DDD/projects/<slug>/dev/status.md` (if exists)
 
 If Jira is configured in master-plan.md → query ticket statuses via Rovo MCP:
 ```
@@ -55,7 +55,7 @@ For each gate in master-plan.md:
 
 | Gate type | Check | Status |
 |---|---|---|
-| design → eng-frontend | `projects/<slug>/handoff/<feature>-handoff.md` exists? | pending → ready |
+| design → eng-frontend | `DDD/projects/<slug>/handoff/<feature>-handoff.md` exists? | pending → ready |
 | design-system gap | `design/component-gaps.md` — all gaps for this feature resolved? | pending → ready |
 | product decision | Decision marked in feature plan? | pending → decided |
 | eng-backend → eng-frontend | `dev/status.md` shows backend stage complete for this feature? | pending → ready |

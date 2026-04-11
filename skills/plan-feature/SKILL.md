@@ -20,7 +20,7 @@ Detail a specific feature into a self-contained execution bundle with tasks, des
 ## Step 1 — Load context
 
 Read:
-- `projects/<slug>/plan/master-plan.md`
+- `DDD/projects/<slug>/plan/master-plan.md`
 - If no master plan → "Run `/plan:project` first to create a master plan."
 
 ---
@@ -36,7 +36,7 @@ options:
   - "<feature 3>"
 ```
 
-Check if this feature has been planned before by looking for `projects/<slug>/plan/features/<feature-slug>.md`.
+Check if this feature has been planned before by looking for `DDD/projects/<slug>/plan/features/<feature-slug>.md`.
 
 ---
 
@@ -48,7 +48,7 @@ Check the feature's workstream tags from master-plan.md:
 → Single pass. Plan everything now. Skip to Step 4a.
 
 **If feature HAS `needs-design` tasks:**
-→ Check if handoff doc exists at `projects/<slug>/handoff/<feature-slug>-handoff.md`
+→ Check if handoff doc exists at `DDD/projects/<slug>/handoff/<feature-slug>-handoff.md`
   - **No handoff doc** → **Pass 1** (plan backend, define design scope)
   - **Handoff doc exists** → **Pass 2** (read handoff, complete the bundle)
 
@@ -107,7 +107,7 @@ Re-run `/plan:feature <feature>` after design delivers to complete Pass 2.
 - Gate: <gate name from master-plan.md>
 - Criteria:
   - [ ] Figma screens finalized and annotated
-  - [ ] pd-handoff doc produced at projects/<slug>/handoff/<feature>-handoff.md
+  - [ ] pd-handoff doc produced at DDD/projects/<slug>/handoff/<feature>-handoff.md
   - [ ] Component gaps resolved or documented
 ```
 
@@ -132,8 +132,18 @@ Wave 3: <tasks after design handoff — awaiting>
 
 ### Save and delegate
 
-Write `projects/<slug>/plan/features/<feature-slug>.md` with Pass 1 content.
+Write `DDD/projects/<slug>/plan/features/<feature-slug>.md` with Pass 1 content.
 Update master-plan.md feature status.
+
+**Spawn task-verifier** with:
+- `artifact_type`: `bundle`
+- `artifact_paths`: the feature file just written
+- `criteria`: the feature description and must-haves from master-plan.md
+- `context_paths`: `DDD/projects/<slug>/brief.md`
+
+If BLOCK → fix the flagged gaps before invoking plan-write-memory or presenting to the user.
+If WARN → surface warnings in the output summary.
+
 Invoke plan-write-memory.
 
 Present:
@@ -159,8 +169,8 @@ Open decisions:
 
 ## Step 4b — Pass 2: Complete the execution bundle
 
-Read the pd-handoff doc at `projects/<slug>/handoff/<feature-slug>-handoff.md`.
-Also read `projects/<slug>/design/component-gaps.md` for DS gap status.
+Read the pd-handoff doc at `DDD/projects/<slug>/handoff/<feature-slug>-handoff.md`.
+Also read `DDD/projects/<slug>/design/component-gaps.md` for DS gap status.
 
 ### Inline design context
 
@@ -284,6 +294,16 @@ Update the feature plan header:
 ```
 
 Update master-plan.md feature and gate status.
+
+**Spawn task-verifier** with:
+- `artifact_type`: `bundle`
+- `artifact_paths`: the feature file just written
+- `criteria`: the acceptance criteria and must-haves from the bundle itself
+- `context_paths`: the design handoff doc, `DDD/projects/<slug>/brief.md`
+
+If BLOCK → fix the flagged gaps before marking `ready-for-execution` or invoking plan-write-memory.
+If WARN → surface warnings in the output summary.
+
 Invoke plan-write-memory.
 
 Present:

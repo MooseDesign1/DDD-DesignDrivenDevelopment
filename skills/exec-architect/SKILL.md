@@ -6,8 +6,9 @@ description: >
   Internal architecture agent for the executor. Reads a feature bundle and reference
   docs, produces per-task architecture decisions: file paths, patterns to follow,
   data flow, and dependencies. Called by exec-feature before each execution stage.
-  Output is passed in-context to exec-backend or exec-frontend — not persisted.
-  Never invoked directly by the user.
+  Output is written to DDD/projects/<slug>/dev/architect-<feature-slug>-<stage>.md
+  by exec-feature immediately after the run. On resume, exec-feature loads that file
+  instead of re-running this skill. Never invoked directly by the user.
 ---
 
 # Exec Architect
@@ -20,7 +21,7 @@ Produce architecture decisions for a set of tasks within a feature execution sta
 
 ## Inputs (passed from exec-feature)
 
-- `feature_bundle` — the full feature plan from `projects/<slug>/plan/features/<feature>.md`
+- `feature_bundle` — the full feature plan from `DDD/projects/<slug>/plan/features/<feature>.md`
 - `stage` — which stage: `backend` or `frontend`
 - `tasks` — the list of tasks for this stage from the bundle
 
@@ -28,7 +29,7 @@ Produce architecture decisions for a set of tasks within a feature execution sta
 
 ## Step 1 — Load reference docs
 
-Read all available reference docs from `projects/<slug>/dev/`:
+Read all available reference docs from `DDD/projects/<slug>/dev/`:
 - `architecture.md` — stack, conventions, patterns
 - `api-map.md` — existing API routes
 - `component-map.md` — existing frontend components
@@ -118,13 +119,38 @@ If any task has:
 
 | Task | Flag | Impact |
 |------|------|--------|
-| <task> | Schema change | Requires migration — will update db-schema.md |
+| <task> | Schema change | Requires migration — will update db-schema.md + docs/DATABASE.md |
+| <task> | New API route | Will update docs/TECHNICAL_DOCUMENTATION.md |
+| <task> | Auth change | Will update docs/AUTHENTICATION.md |
 | <task> | No precedent | No existing pattern for WebSocket handlers — needs architect decision |
 ```
 
+For each task block, add a **Docs Impact** line listing which docs exec-backend must update:
+
+```markdown
+#### Docs Impact
+- `DDD/projects/<slug>/docs/DATABASE.md` — new trades table
+- `DDD/projects/<slug>/docs/TECHNICAL_DOCUMENTATION.md` — POST /api/trades route
+```
+
+Omit the Docs Impact section if a task has no documentation side effects.
+
 ---
 
-## Step 5 — Return to exec-feature
+## Step 5 — Spawn task-verifier
+
+Before returning, spawn task-verifier as a subagent with:
+- `artifact_type`: `architecture`
+- `artifact_paths`: the architecture output just produced (inline — pass the full text)
+- `criteria`: the task list for this stage from the feature bundle
+- `context_paths`: `DDD/projects/<slug>/dev/architecture.md`, the feature bundle
+
+If BLOCK → fix the flagged issues in the architecture decisions before returning to exec-feature. Do not return a plan with known gaps.
+If WARN → include the warnings in the return output so exec-feature can surface them.
+
+---
+
+## Step 6 — Return to exec-feature
 
 Return the full architecture output as structured context. exec-feature passes the relevant
 task block to exec-backend or exec-frontend for each task.
@@ -140,3 +166,5 @@ task block to exec-backend or exec-frontend for each task.
 - **One task = one atomic unit** — each task block must be independently executable
 - **Respect CLAUDE.md rules** — architecture decisions must align with project rules (auth patterns, type system, etc.)
 - **DB changes are explicit** — if a task requires a migration, say so in the files table and flags
+- **Docs impact is explicit** — tag every task with which project docs in `DDD/projects/<slug>/docs/` exec-backend must update
+- **Self-verify before returning** — always spawn task-verifier on the architecture output; never return a plan with a BLOCK verdict

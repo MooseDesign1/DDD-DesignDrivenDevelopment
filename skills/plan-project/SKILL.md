@@ -19,8 +19,8 @@ Take a product brief and produce a phased master plan with features, gates, and 
 
 ## Step 1 — Load context
 
-Read `projects/PROJECTS.md` if it exists. Note any existing projects.
-If replanning an existing project, read `projects/<slug>/plan/master-plan.md`.
+Read `DDD/projects/PROJECTS.md` if it exists. Note any existing projects.
+If replanning an existing project, read `DDD/projects/<slug>/plan/master-plan.md`.
 
 ---
 
@@ -164,7 +164,7 @@ For every feature that spans workstreams, define gates:
 - **Feature:** Login flow
 - **Blocked work:** Login UI build (eng-frontend)
 - **Parallel work:** Auth API, middleware (eng-backend)
-- **Handoff input:** projects/<slug>/handoff/auth-login-handoff.md
+- **Handoff input:** DDD/projects/<slug>/handoff/auth-login-handoff.md
 - **Gate criteria:**
   - [ ] Figma screens finalized and annotated
   - [ ] pd-handoff doc produced
@@ -197,7 +197,7 @@ Validate that the features and their tasks cover all must-haves. Flag any gap.
 
 ## Step 10 — Generate master plan
 
-Write `projects/<slug>/plan/master-plan.md`:
+Write `DDD/projects/<slug>/plan/master-plan.md`:
 
 ```markdown
 # Master Plan: <Project Name>
@@ -250,7 +250,7 @@ Write `projects/<slug>/plan/master-plan.md`:
 - **Feature:** <feature>
 - **Blocked:** <feature list>
 - **Parallel:** <feature list>
-- **Handoff input:** projects/<slug>/handoff/<feature>-handoff.md
+- **Handoff input:** DDD/projects/<slug>/handoff/<feature>-handoff.md
 - **Criteria:**
   - [ ] <criterion>
 - **Status:** pending
@@ -262,13 +262,26 @@ Write `projects/<slug>/plan/master-plan.md`:
 
 ---
 
+## Step 10b — Spawn task-verifier
+
+After writing master-plan.md, spawn task-verifier as a subagent with:
+- `artifact_type`: `plan`
+- `artifact_paths`: the master-plan.md just written
+- `criteria`: the feature list confirmed in Step 4 and must-haves from Step 9
+- `context_paths`: `DDD/projects/<slug>/brief.md`
+
+If BLOCK → fix the flagged gaps in the master plan before initializing project files.
+If WARN → surface warnings in the Step 13 output summary.
+
+---
+
 ## Step 11 — Initialize project files
 
 Create:
 
-**`projects/<slug>/brief.md`** — the compiled brief (if not already existing from pd-new-project)
+**`DDD/projects/<slug>/brief.md`** — the compiled brief (if not already existing from pd-new-project)
 
-**`projects/<slug>/plan/active_session.md`**
+**`DDD/projects/<slug>/plan/active_session.md`**
 ```markdown
 # Active Session
 
@@ -282,7 +295,7 @@ session_started: <date>
 - Master plan created with <n> phases, <n> features, <n> gates
 ```
 
-Update `projects/PROJECTS.md`:
+Update `DDD/projects/PROJECTS.md`:
 - Add row: `| <Project Name> | <slug> | planning | active | <date> |`
 
 ---
