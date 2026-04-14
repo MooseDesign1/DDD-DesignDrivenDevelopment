@@ -69,8 +69,33 @@ You never have to know which command to run. Just describe what you want.
 | Requirement | Notes |
 |---|---|
 | [Claude Code](https://claude.com/claude-code) | CLI v1.0+ |
-| [Figma Console MCP](https://github.com/southleft/figma-console-mcp) | Required for DS Designer and Product Designer |
+| A Figma MCP | One of the two options below — DDD auto-detects on first run |
 | A Figma file with a UI kit | shadcn, Radix, Material, or custom |
+
+---
+
+## Figma MCP Setup
+
+DDD needs a Figma MCP to read and write to your Figma files. Two options are supported — pick one, or use both with a configurable default.
+
+### Option A — Figma Console MCP ✅ Extensively tested
+
+Open-source, runs locally. Requires the Figma Console plugin running in your Figma desktop app.
+
+**Setup:** Follow the guide at [github.com/southleft/figma-console-mcp](https://github.com/southleft/figma-console-mcp)
+
+### Option B — Official Figma MCP
+
+Figma's native MCP, remote-hosted. Requires a Figma desktop app connection and an Organization or Professional plan for write tools.
+
+**Setup:** Follow the guide at [developers.figma.com/docs/figma-mcp-server](https://developers.figma.com/docs/figma-mcp-server)
+
+> [!WARNING]
+> **The official Figma MCP write tools have not been tested with DDD.** DDD was built and validated against the Figma Console MCP, which has undergone extensive testing. The official MCP's `use_figma` tool is theoretically equivalent to `figma_execute`, but real-world behaviour with DDD's build pipeline (component creation, token binding, variant assembly) has not been verified. Use at your own risk and report any issues.
+
+### Auto-detection
+
+On first run, DDD probes both MCPs automatically and writes the result to `design-system/config.md`. No manual configuration needed. If both are connected, it defaults to Figma Console MCP and lets you change the default in config.
 
 ---
 
@@ -228,12 +253,18 @@ You don't need to know which agent to call. Claude's intent router maps your wor
 
 ## First Run
 
-On first launch, Claude detects the empty knowledge-base and automatically starts `/ds-init`.
+On first launch, Claude auto-detects your Figma MCP, then scans your design system.
 
 ```bash
 cd your-project
 claude
 ```
+
+**Step 1 — MCP detection (automatic)**
+
+Claude probes both MCPs silently and writes the result to `design-system/config.md`. If neither is connected, it shows setup links and waits.
+
+**Step 2 — Knowledge-base scan (`/ds-init`)**
 
 <div align="center">
 

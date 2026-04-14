@@ -26,7 +26,12 @@ Read `design-system/knowledge-base/components.md`.
 
 ### Step 3 — Ask basics
 
-Ask the user (skip any already answered):
+Ask the user (skip any already answered in config.md):
+
+0. **Figma MCP** — confirm `figma_mcp` is set in config.md. If not set, stop: the boot
+   check in CLAUDE.md auto-detects and sets this. Ask the user to start a new session
+   so it triggers, or manually probe `whoami` and `figma_get_status` now and set it.
+
 1. **Figma file URL** (required) — extract fileKey from the URL
 2. **UI kit base** — "What UI kit is this based on?" (shadcn, Radix, Material, custom, other)
 3. **Ticket tracker** — "Do you use a ticket tracker for handoff?" (Jira, Linear, none)

@@ -5,7 +5,7 @@ effort: low
 description: >
   Internal skill for creating Figma frames with auto-layout, sizing, spacing, and padding.
   Called by ds-build and ds-add-variant. Handles frame creation, auto-layout setup, and
-  child node placement using figma-console MCP tools.
+  child node placement. Uses tool routing from config.md figma_mcp setting.
 ---
 
 # Build Frame

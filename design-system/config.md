@@ -7,6 +7,10 @@
 - ui_kit: shadcn/ui
 - tracker: none
 
+## Figma MCP
+- figma_mcp: figma-console
+- figma_mcp_default:  # only used when figma_mcp: both
+
 ## Preferences
 
 ## Custom Rules

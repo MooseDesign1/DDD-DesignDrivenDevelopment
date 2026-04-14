@@ -8,6 +8,10 @@
 - tracker:
 - tracker_project:
 
+## Figma MCP
+- figma_mcp:          # figma-console | official | both
+- figma_mcp_default:  # only used when figma_mcp: both — figma-console | official
+
 ## Preferences
 
 ## Custom Rules
