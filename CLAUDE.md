@@ -62,9 +62,37 @@ On every session start:
 If `design-system/knowledge-base/components.md` is empty or contains only the template
 header → auto-trigger `/ds-init` to scan the Figma file and populate the knowledge-base.
 
-## MCP Check
-If figma-console MCP is disconnected, stop and ask the user to reconnect before continuing
-any design system work.
+## Figma MCP
+On every session start, read `design-system/config.md` for `figma_mcp`.
+
+**If `figma_mcp` is not set**, auto-detect which MCPs are connected:
+1. Call `whoami` (official Figma MCP) — success → official is available
+2. Call `figma_get_status` (figma-console MCP) — success → figma-console is available
+3. Write to `design-system/config.md` based on results:
+   - Both succeed → `figma_mcp: both`, `figma_mcp_default: figma-console`
+   - Only official → `figma_mcp: official`
+   - Only figma-console → `figma_mcp: figma-console`
+   - Neither → tell the user neither MCP is connected, show setup links, stop:
+     - Figma Console MCP: github.com/southleft/figma-console-mcp
+     - Official Figma MCP: developers.figma.com/docs/figma-mcp-server
+4. Tell the user what was detected. If `both` was set, mention they can change the default
+   by editing `figma_mcp_default` in `design-system/config.md`.
+
+**Tool routing table** — use the column matching your configured MCP:
+
+| Operation | figma-console | official |
+|-----------|--------------|---------|
+| Execute JS | `figma_execute` | `use_figma` |
+| Screenshot | `figma_take_screenshot` | `get_screenshot` |
+| Search components | `figma_search_components` | `search_design_system` |
+| Get variables | `figma_get_variables` | `get_variable_defs` |
+| Get styles | `figma_get_styles` | `use_figma` → `figma.getLocalTextStylesAsync()` etc. |
+| Navigate to node | `figma_navigate` | `use_figma` → `figma.viewport.scrollAndZoomIntoView([node])` |
+| Component details | `figma_get_component_details` | `get_design_context` |
+
+If `figma_mcp: both` — use `figma_mcp_default` first; if the call fails, retry with the other MCP's tool automatically.
+
+**Connection check:** If the configured MCP tool fails to respond, stop and tell the user which MCP needs to be reconnected.
 
 ## Token Boundary
 Work ONLY with tokens discovered in `design-system/knowledge-base/tokens.md`.
